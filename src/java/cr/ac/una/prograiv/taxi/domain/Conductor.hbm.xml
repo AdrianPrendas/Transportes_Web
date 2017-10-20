@@ -1,0 +1,36 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 18-oct-2017 14:51:38 by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="cr.ac.una.prograiv.taxi.domain.Conductor" table="conductor" catalog="taxiweb" optimistic-lock="version">
+        <id name="usuarioIdUsuario" type="string">
+            <column name="Usuario_idUsuario" length="20" />
+            <generator class="foreign">
+                <param name="property">usuario</param>
+            </generator>
+        </id>
+        <one-to-one name="usuario" class="cr.ac.una.prograiv.taxi.domain.Usuario" constrained="true" lazy="false"></one-to-one>
+        <many-to-one name="vehiculo" class="cr.ac.una.prograiv.taxi.domain.Vehiculo" fetch="select" lazy="false">
+            <column name="Vehiculo_placa" length="10" not-null="true" />
+        </many-to-one>
+        <property name="tipoLicencia" type="string">
+            <column name="tipoLicencia" length="4" not-null="true" />
+        </property>
+        <property name="licenciaVence" type="date">
+            <column name="licenciaVence" length="10" not-null="true" />
+        </property>
+        <property name="puntuacion" type="int">
+            <column name="puntuacion" not-null="true" />
+        </property>
+        <property name="cedula" type="int">
+            <column name="cedula" not-null="true" />
+        </property>
+        <bag name="viajes" table="viaje" inverse="true" lazy="false" fetch="select">
+            <key>
+                <column name="Conductor" length="20" not-null="true" />
+            </key>
+            <one-to-many class="cr.ac.una.prograiv.taxi.domain.Viaje" />
+        </bag>
+    </class>
+</hibernate-mapping>

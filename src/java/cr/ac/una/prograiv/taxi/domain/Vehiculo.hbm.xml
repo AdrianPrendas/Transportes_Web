@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 18-oct-2017 14:51:38 by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="cr.ac.una.prograiv.taxi.domain.Vehiculo" table="vehiculo" catalog="taxiweb" optimistic-lock="version">
+        <id name="placa" type="string">
+            <column name="placa" length="10" />
+            <generator class="assigned" />
+        </id>
+        <property name="ano" type="int">
+            <column name="ano" not-null="true" />
+        </property>
+        <property name="modelo" type="string">
+            <column name="Modelo" length="45" not-null="true" />
+        </property>
+        <property name="color" type="string">
+            <column name="Color" length="45" not-null="true" />
+        </property>
+        <property name="estado" type="boolean">
+            <column name="Estado" not-null="true" />
+        </property>
+        <bag name="conductors" table="conductor" inverse="true" lazy="false" fetch="select">
+            <key>
+                <column name="Vehiculo_placa" length="10" not-null="true" />
+            </key>
+            <one-to-many class="cr.ac.una.prograiv.taxi.domain.Conductor" />
+        </bag>
+    </class>
+</hibernate-mapping>
