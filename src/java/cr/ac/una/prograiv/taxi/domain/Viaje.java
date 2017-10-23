@@ -1,8 +1,7 @@
 package cr.ac.una.prograiv.taxi.domain;
-// Generated 21-oct-2017 19:50:53 by Hibernate Tools 4.3.1
+// Generated 22-oct-2017 21:54:06 by Hibernate Tools 4.3.1
 
 
-import java.io.Serializable;
 import java.util.Date;
 
 /**
@@ -12,13 +11,13 @@ public class Viaje  implements java.io.Serializable, Jsonable {
 
 
      private int idViaje;
+     private Direccion direccionByDireccionDestino;
+     private Direccion direccionByDireccionOrigen;
      private Usuario usuarioByConductor;
      private Usuario usuarioByUsuario;
      private Date fecha;
      private String duracion;
      private int monto;
-     private Serializable direccionNombreOrigen;
-     private Serializable direccionNombreDestino;
      private int puntaje;
      private String comentario;
 
@@ -26,26 +25,26 @@ public class Viaje  implements java.io.Serializable, Jsonable {
     }
 
 	
-    public Viaje(int idViaje, Usuario usuarioByConductor, Usuario usuarioByUsuario, Date fecha, String duracion, int monto, Serializable direccionNombreOrigen, Serializable direccionNombreDestino, int puntaje) {
+    public Viaje(int idViaje, Direccion direccionByDireccionDestino, Direccion direccionByDireccionOrigen, Usuario usuarioByConductor, Usuario usuarioByUsuario, Date fecha, String duracion, int monto, int puntaje) {
         this.idViaje = idViaje;
+        this.direccionByDireccionDestino = direccionByDireccionDestino;
+        this.direccionByDireccionOrigen = direccionByDireccionOrigen;
         this.usuarioByConductor = usuarioByConductor;
         this.usuarioByUsuario = usuarioByUsuario;
         this.fecha = fecha;
         this.duracion = duracion;
         this.monto = monto;
-        this.direccionNombreOrigen = direccionNombreOrigen;
-        this.direccionNombreDestino = direccionNombreDestino;
         this.puntaje = puntaje;
     }
-    public Viaje(int idViaje, Usuario usuarioByConductor, Usuario usuarioByUsuario, Date fecha, String duracion, int monto, Serializable direccionNombreOrigen, Serializable direccionNombreDestino, int puntaje, String comentario) {
+    public Viaje(int idViaje, Direccion direccionByDireccionDestino, Direccion direccionByDireccionOrigen, Usuario usuarioByConductor, Usuario usuarioByUsuario, Date fecha, String duracion, int monto, int puntaje, String comentario) {
        this.idViaje = idViaje;
+       this.direccionByDireccionDestino = direccionByDireccionDestino;
+       this.direccionByDireccionOrigen = direccionByDireccionOrigen;
        this.usuarioByConductor = usuarioByConductor;
        this.usuarioByUsuario = usuarioByUsuario;
        this.fecha = fecha;
        this.duracion = duracion;
        this.monto = monto;
-       this.direccionNombreOrigen = direccionNombreOrigen;
-       this.direccionNombreDestino = direccionNombreDestino;
        this.puntaje = puntaje;
        this.comentario = comentario;
     }
@@ -56,6 +55,20 @@ public class Viaje  implements java.io.Serializable, Jsonable {
     
     public void setIdViaje(int idViaje) {
         this.idViaje = idViaje;
+    }
+    public Direccion getDireccionByDireccionDestino() {
+        return this.direccionByDireccionDestino;
+    }
+    
+    public void setDireccionByDireccionDestino(Direccion direccionByDireccionDestino) {
+        this.direccionByDireccionDestino = direccionByDireccionDestino;
+    }
+    public Direccion getDireccionByDireccionOrigen() {
+        return this.direccionByDireccionOrigen;
+    }
+    
+    public void setDireccionByDireccionOrigen(Direccion direccionByDireccionOrigen) {
+        this.direccionByDireccionOrigen = direccionByDireccionOrigen;
     }
     public Usuario getUsuarioByConductor() {
         return this.usuarioByConductor;
@@ -91,20 +104,6 @@ public class Viaje  implements java.io.Serializable, Jsonable {
     
     public void setMonto(int monto) {
         this.monto = monto;
-    }
-    public Serializable getDireccionNombreOrigen() {
-        return this.direccionNombreOrigen;
-    }
-    
-    public void setDireccionNombreOrigen(Serializable direccionNombreOrigen) {
-        this.direccionNombreOrigen = direccionNombreOrigen;
-    }
-    public Serializable getDireccionNombreDestino() {
-        return this.direccionNombreDestino;
-    }
-    
-    public void setDireccionNombreDestino(Serializable direccionNombreDestino) {
-        this.direccionNombreDestino = direccionNombreDestino;
     }
     public int getPuntaje() {
         return this.puntaje;

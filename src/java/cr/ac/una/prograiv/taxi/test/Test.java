@@ -17,8 +17,7 @@ public class Test {
     private static Usuario getUsuarioBase() {
         String idUsuario = "itzumarpa",
                 nombre = "Pedro",
-                apellido1 = "Valverde",
-                apellido2 = "Lobo",
+                apellidos = "Valverde valverde",
                 correo = "pedro@gmail.com",
                 password = "1234",
                 direccion = "barreal";
@@ -32,24 +31,22 @@ public class Test {
             e.printStackTrace();
             return null;
         }
-
         Usuario u = new Usuario(
                 idUsuario,
+                new Direccion(0,13.5,12.5),
                 nombre,
-                apellido1,
-                apellido2,
+                apellidos,
                 fechaNacimiento,
                 telefono,
                 correo,
                 password,
-                esAdministrador,
-                direccion);
+                esAdministrador);
         return u;
     }
 
     private static Vehiculo getVehiculoBase() {
-        //Vehiculo(String placa, int ano, String modelo, String color, boolean estado)
-        return new Vehiculo("BBH-322", 1990, "sedan", "negro", false);
+        //Vehiculo(String placa, int ano, String modelo, String marca, String color, boolean estado) {
+        return new Vehiculo("BBH-322", 1990, "tilda","nisan", "negro", false);
     }
     
     private static Conductor getConductorBase(){
@@ -102,8 +99,7 @@ public class Test {
         u = TestUsuario.findUsuarioById(u.getIdUsuario());
 
         u.setNombre("Jafeth");
-        u.setApellido1("Campos");
-        u.setApellido2("Campos");
+        u.setApellidos("Campos campos");
         u.setCorreo("jafeth@gmail.com");
 
         u = TestUsuario.mergeUsuario(u);
@@ -123,8 +119,7 @@ public class Test {
         c = TestConductor.findConductorById(c.getUsuarioIdUsuario());
 
         u.setNombre("Jafeth");
-        u.setApellido1("Campos");
-        u.setApellido2("Campos");
+        u.setApellidos("Campos campos");
         u.setCorreo("jafeth@gmail.com");
         c.setPuntuacion(100);
         c.setUsuario(u);

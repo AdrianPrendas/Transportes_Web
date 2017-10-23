@@ -10,5 +10,6 @@
     <mapping resource="cr/ac/una/prograiv/taxi/domain/Conductor.hbm.xml"/>
     <mapping resource="cr/ac/una/prograiv/taxi/domain/Usuario.hbm.xml"/>
     <mapping resource="cr/ac/una/prograiv/taxi/domain/Vehiculo.hbm.xml"/>
+    <mapping resource="cr/ac/una/prograiv/taxi/domain/Direccion.hbm.xml"/>
   </session-factory>
 </hibernate-configuration>

@@ -1,4 +1,3 @@
-
 package cr.ac.una.prograiv.taxi.controller;
 
 import com.google.gson.Gson;
@@ -38,35 +37,32 @@ public class ConductorServlet extends HttpServlet {
             response.setContentType("text/xml");
             RuntimeTypeAdapterFactory<Jsonable> rta = RuntimeTypeAdapterFactory.of(Jsonable.class, "_class")
                     .registerSubtype(Usuario.class, "Usuario")
+                    .registerSubtype(Direccion.class, "Direccion")
+                    .registerSubtype(Conductor.class, "Conductor")
                     .registerSubtype(Vehiculo.class, "Vehiculo")
-                    .registerSubtype(Conductor.class, "Conductor");
-            
-                    
+                    .registerSubtype(Viaje.class, "Viaje");
+
             Gson gson = new GsonBuilder().registerTypeAdapterFactory(rta).setDateFormat("dd/mm/yyyy").create();
             String json;
-            
+
             ConductorBL cBL = new ConductorBL();
-            
-            
+
             String accion = request.getParameter("action");
-System.out.println("accion: "+accion);
-            switch(accion){
+            System.out.println("accion: " + accion);
+            switch (accion) {
                 case "getConductores":
                     List<Conductor> listaConductores = cBL.findAll(Conductor.class.getName());
-                    
+
                     json = gson.toJson(listaConductores);
-System.out.println(json);
+                    System.out.println(json);
                     out.print(json);
                     break;
             }
-            
-        }catch(Exception e){e.printStackTrace();}
-        
-        
-        
-        
-        
-        
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

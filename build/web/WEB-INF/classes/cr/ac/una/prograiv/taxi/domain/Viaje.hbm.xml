@@ -1,17 +1,23 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
-<!-- Generated 21-oct-2017 19:50:55 by Hibernate Tools 4.3.1 -->
+<!-- Generated 22-oct-2017 21:54:06 by Hibernate Tools 4.3.1 -->
 <hibernate-mapping>
     <class name="cr.ac.una.prograiv.taxi.domain.Viaje" table="viaje" catalog="taxiweb" optimistic-lock="version">
         <id name="idViaje" type="int">
             <column name="idViaje" />
             <generator class="assigned" />
         </id>
-        <many-to-one name="usuarioByConductor" class="cr.ac.una.prograiv.taxi.domain.Usuario" lazy="false" fetch="select">
+        <many-to-one name="direccionByDireccionDestino" class="cr.ac.una.prograiv.taxi.domain.Direccion" fetch="select" lazy="false">
+            <column name="Direccion_destino" not-null="true" />
+        </many-to-one>
+        <many-to-one name="direccionByDireccionOrigen" class="cr.ac.una.prograiv.taxi.domain.Direccion" fetch="select" lazy="false">
+            <column name="Direccion_origen" not-null="true" />
+        </many-to-one>
+        <many-to-one name="usuarioByConductor" class="cr.ac.una.prograiv.taxi.domain.Usuario" fetch="select" lazy="false">
             <column name="Conductor" length="20" not-null="true" />
         </many-to-one>
-        <many-to-one name="usuarioByUsuario" class="cr.ac.una.prograiv.taxi.domain.Usuario" lazy="false" fetch="select">
+        <many-to-one name="usuarioByUsuario" class="cr.ac.una.prograiv.taxi.domain.Usuario" fetch="select" lazy="false">
             <column name="Usuario" length="20" not-null="true" />
         </many-to-one>
         <property name="fecha" type="timestamp">
@@ -22,12 +28,6 @@
         </property>
         <property name="monto" type="int">
             <column name="monto" not-null="true" />
-        </property>
-        <property name="direccionNombreOrigen" type="serializable">
-            <column name="direccion_nombre_origen" not-null="true" />
-        </property>
-        <property name="direccionNombreDestino" type="serializable">
-            <column name="direccion_nombre_destino" not-null="true" />
         </property>
         <property name="puntaje" type="int">
             <column name="Puntaje" not-null="true" />

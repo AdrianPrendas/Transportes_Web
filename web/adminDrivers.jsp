@@ -37,12 +37,13 @@
                     <td>Fecha de nacimiento</td>
                     <td>Telefono</td>
                     <td>Correo</td>
-                    <td>Direccion</td>
                     <td>Vehiculo placa</td>
                     <td>Año</td>
                     <td>Model</td>
+                    <td>Marca</td>
                     <td>Color</td>
                     <td>Estado</td>
+                    <td>Accion</td>
                 </tr>
             </thead>
             <tbody id="tablaConductores">

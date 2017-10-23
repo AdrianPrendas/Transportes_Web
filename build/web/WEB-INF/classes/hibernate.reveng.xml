@@ -6,4 +6,5 @@
   <table-filter match-name="usuario"/>
   <table-filter match-name="vehiculo"/>
   <table-filter match-name="conductor"/>
+  <table-filter match-name="direccion"/>
 </hibernate-reverse-engineering>

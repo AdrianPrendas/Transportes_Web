@@ -1,3 +1,4 @@
+
 package cr.ac.una.prograiv.taxi.dao;
 
 import cr.ac.una.prograiv.taxi.domain.Usuario;
@@ -7,7 +8,7 @@ import org.hibernate.HibernateException;
 
 /**
  *
- * @author Zeneida
+ * @author _Adrian_Prendas_
  */
 public class UsuarioDAO extends HibernateUtil implements IBaseDAO<Usuario, String> {
 

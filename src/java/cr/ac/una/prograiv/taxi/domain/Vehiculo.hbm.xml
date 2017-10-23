@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
-<!-- Generated 18-oct-2017 14:51:38 by Hibernate Tools 4.3.1 -->
+<!-- Generated 22-oct-2017 21:54:06 by Hibernate Tools 4.3.1 -->
 <hibernate-mapping>
     <class name="cr.ac.una.prograiv.taxi.domain.Vehiculo" table="vehiculo" catalog="taxiweb" optimistic-lock="version">
         <id name="placa" type="string">
@@ -13,6 +13,9 @@
         </property>
         <property name="modelo" type="string">
             <column name="Modelo" length="45" not-null="true" />
+        </property>
+        <property name="marca" type="string">
+            <column name="marca" length="45" not-null="true" />
         </property>
         <property name="color" type="string">
             <column name="Color" length="45" not-null="true" />

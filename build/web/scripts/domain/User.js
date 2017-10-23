@@ -1,19 +1,18 @@
 
-function User(id, name, last, final, date, address, phone, email, password, tipo) {
-    this.User(id, name, last, final, date, address, phone, email, password, tipo);
+function User(idUsuario, nombre, direccion, apellidos, fechaNacimiento, telefono, correo, password, esAdministrador){
+    this.User(idUsuario, nombre, direccion, apellidos, fechaNacimiento, telefono, correo, password, esAdministrador);
 }
 User.prototype = {
-    User: function (id, name, last, final, date, address, phone, email, password, tipo){
-        this.idUsuario=id;
-        this.nombre = name;
-        this.apellido1 = last;
-        this.apellido2 = final;
-        this.fechaNacimiento = date;
-        this.direccion = address;
-        this.telefono = phone;
-        this.correo = email;
+    User: function (idUsuario, nombre, direccion, apellidos, fechaNacimiento, telefono, correo, password, esAdministrador){
+        this.idUsuario=idUsuario;
+        this.nombre = nombre;
+        this.direccion =direccion;
+        this.apellidos = apellidos;
+        this.fechaNacimiento = fechaNacimiento;
+        this.telefono = telefono;
+        this.correo = correo;
         this.password = password;
-        this.esAdministrador = tipo;
+        this.esAdministrador = esAdministrador;
     },
     toString: function () {
        return JSON.stringify(this);
