@@ -20,11 +20,5 @@
         <property name="estado" type="boolean">
             <column name="Estado" not-null="true" />
         </property>
-        <bag name="conductors" table="conductor" inverse="true" lazy="false" fetch="select">
-            <key>
-                <column name="Vehiculo_placa" length="10" not-null="true" />
-            </key>
-            <one-to-many class="cr.ac.una.prograiv.taxi.domain.Conductor" />
-        </bag>
     </class>
 </hibernate-mapping>

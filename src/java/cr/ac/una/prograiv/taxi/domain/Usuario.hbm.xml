@@ -35,7 +35,6 @@
         <property name="direccion" type="string">
             <column name="direccion" not-null="true" />
         </property>
-        <one-to-one name="conductor" class="cr.ac.una.prograiv.taxi.domain.Conductor"></one-to-one>
         <bag name="viajes" table="viaje" inverse="true" lazy="false" fetch="select">
             <key>
                 <column name="Usuario" length="20" not-null="true" />

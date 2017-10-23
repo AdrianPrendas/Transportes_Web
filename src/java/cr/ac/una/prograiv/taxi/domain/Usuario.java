@@ -23,8 +23,11 @@ public class Usuario  implements java.io.Serializable, Jsonable {
      private String password;
      private boolean esAdministrador;
      private String direccion;
-     private Conductor conductor;
      private List<Viaje> viajes = new ArrayList();
+     
+     public boolean equals(Usuario u){
+          return this.idUsuario.equals(u.getIdUsuario());
+     }
 
     public Usuario() {
     }
@@ -41,20 +44,6 @@ public class Usuario  implements java.io.Serializable, Jsonable {
         this.password = password;
         this.esAdministrador = esAdministrador;
         this.direccion = direccion;
-    }
-    public Usuario(String idUsuario, String nombre, String apellido1, String apellido2, Date fechaNacimiento, int telefono, String correo, String password, boolean esAdministrador, String direccion, Conductor conductor, List<Viaje> viajes) {
-       this.idUsuario = idUsuario;
-       this.nombre = nombre;
-       this.apellido1 = apellido1;
-       this.apellido2 = apellido2;
-       this.fechaNacimiento = fechaNacimiento;
-       this.telefono = telefono;
-       this.correo = correo;
-       this.password = password;
-       this.esAdministrador = esAdministrador;
-       this.direccion = direccion;
-       this.conductor = conductor;
-       this.viajes = viajes;
     }
    
     public String getIdUsuario() {
@@ -126,13 +115,6 @@ public class Usuario  implements java.io.Serializable, Jsonable {
     
     public void setDireccion(String direccion) {
         this.direccion = direccion;
-    }
-    public Conductor getConductor() {
-        return this.conductor;
-    }
-    
-    public void setConductor(Conductor conductor) {
-        this.conductor = conductor;
     }
     public List<Viaje> getViajes() {
         return this.viajes;

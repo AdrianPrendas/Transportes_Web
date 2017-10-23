@@ -1,6 +1,7 @@
 package cr.ac.una.prograiv.taxi.test;
 
 import cr.ac.una.prograiv.taxi.domain.*;
+import java.awt.geom.Point2D;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -74,13 +75,13 @@ public class Test {
     
     private static List<Viaje> getViajesBase(){
         List lista = new ArrayList();
-        Conductor c = getConductorBase();
+        /*Conductor c = getConductorBase();
         Usuario u = getUsuarioBase();
         //Viaje(int idViaje, Conductor conductor, Usuario usuario, Date fecha, String duracion, int monto, Serializable direccionNombreOrigen, Serializable direccionNombreDestino, int puntaje) {
-        Point origen = new Point(10.9,11.3);
-        Point destino = new Point(13.9,12.8);
+        Point2D.Double origen = new Point2D.Double(10.9,11.3);
+        Point2D.Double destino = new Point2D.Double(13.9,12.8);
         lista.add(new Viaje(0,c,u,new Date(),"10:28",5000,origen,destino,10));
-        lista.add(new Viaje(0,c,u,new Date(),"9:38",5000,origen,destino,10));
+        /*lista.add(new Viaje(0,c,u,new Date(),"9:38",5000,origen,destino,10));
         lista.add(new Viaje(0,c,u,new Date(),"8:50",5000,origen,destino,10));
         lista.add(new Viaje(0,c,u,new Date(),"13:30",5000,origen,destino,10));
         lista.add(new Viaje(0,c,u,new Date(),"15:00",5000,origen,destino,10));
@@ -88,7 +89,7 @@ public class Test {
         lista.add(new Viaje(0,c,u,new Date(),"17:20",5000,origen,destino,10));
         lista.add(new Viaje(0,c,u,new Date(),"10:28",5000,origen,destino,10));
         lista.add(new Viaje(0,c,u,new Date(),"11:58",5000,origen,destino,10));
-        lista.add(new Viaje(0,c,u,new Date(),"14:10",5000,origen,destino,10));
+        lista.add(new Viaje(0,c,u,new Date(),"14:10",5000,origen,destino,10));*/
         
         return lista;
     }

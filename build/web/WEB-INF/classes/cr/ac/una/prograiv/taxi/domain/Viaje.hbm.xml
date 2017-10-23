@@ -1,0 +1,39 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 21-oct-2017 19:50:55 by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="cr.ac.una.prograiv.taxi.domain.Viaje" table="viaje" catalog="taxiweb" optimistic-lock="version">
+        <id name="idViaje" type="int">
+            <column name="idViaje" />
+            <generator class="assigned" />
+        </id>
+        <many-to-one name="usuarioByConductor" class="cr.ac.una.prograiv.taxi.domain.Usuario" lazy="false" fetch="select">
+            <column name="Conductor" length="20" not-null="true" />
+        </many-to-one>
+        <many-to-one name="usuarioByUsuario" class="cr.ac.una.prograiv.taxi.domain.Usuario" lazy="false" fetch="select">
+            <column name="Usuario" length="20" not-null="true" />
+        </many-to-one>
+        <property name="fecha" type="timestamp">
+            <column name="fecha" length="19" not-null="true" />
+        </property>
+        <property name="duracion" type="string">
+            <column name="duracion" length="10" not-null="true" />
+        </property>
+        <property name="monto" type="int">
+            <column name="monto" not-null="true" />
+        </property>
+        <property name="direccionNombreOrigen" type="serializable">
+            <column name="direccion_nombre_origen" not-null="true" />
+        </property>
+        <property name="direccionNombreDestino" type="serializable">
+            <column name="direccion_nombre_destino" not-null="true" />
+        </property>
+        <property name="puntaje" type="int">
+            <column name="Puntaje" not-null="true" />
+        </property>
+        <property name="comentario" type="string">
+            <column name="Comentario" />
+        </property>
+    </class>
+</hibernate-mapping>

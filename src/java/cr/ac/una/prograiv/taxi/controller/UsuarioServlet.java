@@ -6,10 +6,11 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.typeadapters.RuntimeTypeAdapterFactory;
 import cr.ac.una.prograiv.taxi.bl.BaseBL;
 import cr.ac.una.prograiv.taxi.bl.UsuarioBL;
-import cr.ac.una.prograiv.taxi.domain.Jsonable;
-import cr.ac.una.prograiv.taxi.domain.Usuario;
+import cr.ac.una.prograiv.taxi.domain.*;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.Iterator;
+import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -38,8 +39,10 @@ public class UsuarioServlet extends HttpServlet {
         try (PrintWriter out = response.getWriter()) {
             response.setContentType("text/xml");
             RuntimeTypeAdapterFactory<Jsonable> rta = RuntimeTypeAdapterFactory.of(Jsonable.class, "_class")
-                    .registerSubtype(Usuario.class, "Usuario");
-                    //.registerSubtype(Usuario.class, "Usuario");
+                    .registerSubtype(Usuario.class, "Usuario")
+                    .registerSubtype(Conductor.class, "Conductor")
+                    .registerSubtype(Vehiculo.class, "Vehiculo")
+                    .registerSubtype(Viaje.class, "Viaje");
                     
             Gson gson = new GsonBuilder().registerTypeAdapterFactory(rta).setDateFormat("dd/mm/yyyy").create();
             
@@ -60,7 +63,7 @@ System.out.println(user);
 System.out.println("se almaceno el cliente correctamente");
                     json = gson.toJson(new Exception("se almaceno el cliente correctamente"));
                     }catch(Exception e){
-                        json = gson.toJson(new Exception("error: no se pudo almacenar el cliente"));
+                        json = gson.toJson(new Exception("Error: no se pudo almacenar el cliente"));
                         e.printStackTrace();
                     }
                     out.write(json);
@@ -73,9 +76,20 @@ System.out.println("se almaceno el cliente correctamente");
                     user.setPassword(json);
                     
                     user = ubl.login(user);
-                    if(user != null)
-                        json = gson.toJson(user);
-                    else
+                    if(user != null){
+                        List<Conductor> listaConductores = ubl.getDao(Conductor.class.getName()).findAll();
+                        Iterator<Conductor> it = listaConductores.iterator();
+                        Conductor c = new Conductor();
+                        for(;it.hasNext();){
+                            c = it.next();
+                            if(c.equals(user))
+                                break;
+                        }
+                        if(c.equals(user))
+                           json = gson.toJson(c);
+                        else
+                           json = gson.toJson(user);
+                    }else
                         json = gson.toJson(new Exception("error: usuario y/o contraseña invalidos"));
 System.out.println(json);                    
                     out.write(json);

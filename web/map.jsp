@@ -5,7 +5,7 @@
     </head>
     <body style="height: 100%;">
         <header style="position: absolute;left:0px;right: 0px;">
-            <%@ include file="nav.jspf" %> 
+            <%@ include file="userNav.jspf" %> 
         </header>
         <div id="floating-panel">
             <b>Start: </b>

@@ -26,11 +26,5 @@
         <property name="cedula" type="int">
             <column name="cedula" not-null="true" />
         </property>
-        <bag name="viajes" table="viaje" inverse="true" lazy="false" fetch="select">
-            <key>
-                <column name="Conductor" length="20" not-null="true" />
-            </key>
-            <one-to-many class="cr.ac.una.prograiv.taxi.domain.Viaje" />
-        </bag>
     </class>
 </hibernate-mapping>
