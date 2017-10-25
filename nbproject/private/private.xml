@@ -9,23 +9,27 @@
             <file>file:/E:/Carrera/Ciclo%20II%202017/Programacion%20IV/Proyecto%20final/TaxiWeb/src/java/cr/ac/una/prograiv/taxi/bl/UsuarioBL.java</file>
             <file>file:/E:/Carrera/Ciclo%20II%202017/Programacion%20IV/Proyecto%20final/TaxiWeb/web/scripts/domain/Car.js</file>
             <file>file:/E:/Carrera/Ciclo%20II%202017/Programacion%20IV/Proyecto%20final/TaxiWeb/src/java/cr/ac/una/prograiv/taxi/test/TestConductor.java</file>
+            <file>file:/E:/Carrera/Ciclo%20II%202017/Programacion%20IV/Proyecto%20final/TaxiWeb/web/dataDriverModal.jspf</file>
             <file>file:/E:/Carrera/Ciclo%20II%202017/Programacion%20IV/Proyecto%20final/TaxiWeb/src/java/cr/ac/una/prograiv/taxi/domain/Usuario.hbm.xml</file>
             <file>file:/E:/Carrera/Ciclo%20II%202017/Programacion%20IV/Proyecto%20final/TaxiWeb/web/scripts/domain/Travel.js</file>
             <file>file:/E:/Carrera/Ciclo%20II%202017/Programacion%20IV/Proyecto%20final/TaxiWeb/src/java/cr/ac/una/prograiv/taxi/domain/Usuario.java</file>
             <file>file:/E:/Carrera/Ciclo%20II%202017/Programacion%20IV/Proyecto%20final/TaxiWeb/src/java/hibernate.cfg.xml</file>
             <file>file:/E:/Carrera/Ciclo%20II%202017/Programacion%20IV/Proyecto%20final/TaxiWeb/src/java/cr/ac/una/prograiv/taxi/controller/ConductorServlet.java</file>
+            <file>file:/E:/Carrera/Ciclo%20II%202017/Programacion%20IV/Proyecto%20final/TaxiWeb/web/mapAddressModal.jspf</file>
             <file>file:/E:/Carrera/Ciclo%20II%202017/Programacion%20IV/Proyecto%20final/TaxiWeb/src/java/cr/ac/una/prograiv/taxi/domain/Vehiculo.hbm.xml</file>
             <file>file:/E:/Carrera/Ciclo%20II%202017/Programacion%20IV/Proyecto%20final/TaxiWeb/nbproject/build-impl.xml</file>
             <file>file:/E:/Carrera/Ciclo%20II%202017/Programacion%20IV/Proyecto%20final/TaxiWeb/src/java/hibernate.reveng.xml</file>
             <file>file:/E:/Carrera/Ciclo%20II%202017/Programacion%20IV/Proyecto%20final/TaxiWeb/src/java/cr/ac/una/prograiv/taxi/dao/UsuarioDAO.java</file>
             <file>file:/E:/Carrera/Ciclo%20II%202017/Programacion%20IV/Proyecto%20final/TaxiWeb/src/java/cr/ac/una/prograiv/taxi/dao/VehiculoDAO.java</file>
-            <file>file:/E:/Carrera/Ciclo%20II%202017/Programacion%20IV/Proyecto%20final/TaxiWeb/src/java/cr/ac/una/prograiv/taxi/domain/Conductor.hbm.xml</file>
             <file>file:/E:/Carrera/Ciclo%20II%202017/Programacion%20IV/Proyecto%20final/TaxiWeb/test/initDataBase/DataTest.java</file>
+            <file>file:/E:/Carrera/Ciclo%20II%202017/Programacion%20IV/Proyecto%20final/TaxiWeb/src/java/cr/ac/una/prograiv/taxi/domain/Conductor.hbm.xml</file>
+            <file>file:/E:/Carrera/Ciclo%20II%202017/Programacion%20IV/Proyecto%20final/TaxiWeb/web/driver.jsp</file>
             <file>file:/E:/Carrera/Ciclo%20II%202017/Programacion%20IV/Proyecto%20final/TaxiWeb/src/java/cr/ac/una/prograiv/taxi/bl/VehiculoBL.java</file>
             <file>file:/E:/Carrera/Ciclo%20II%202017/Programacion%20IV/Proyecto%20final/TaxiWeb/web/index.jsp</file>
             <file>file:/E:/Carrera/Ciclo%20II%202017/Programacion%20IV/Proyecto%20final/TaxiWeb/src/java/cr/ac/una/prograiv/taxi/test/TestDireccion.java</file>
-            <file>file:/E:/Carrera/Ciclo%20II%202017/Programacion%20IV/Proyecto%20final/TaxiWeb/src/java/cr/ac/una/prograiv/taxi/domain/Direccion.java</file>
+            <file>file:/E:/Carrera/Ciclo%20II%202017/Programacion%20IV/Proyecto%20final/TaxiWeb/web/adminCars.jsp</file>
             <file>file:/E:/Carrera/Ciclo%20II%202017/Programacion%20IV/Proyecto%20final/TaxiWeb/src/java/cr/ac/una/prograiv/taxi/bl/ViajeBL.java</file>
+            <file>file:/E:/Carrera/Ciclo%20II%202017/Programacion%20IV/Proyecto%20final/TaxiWeb/src/java/cr/ac/una/prograiv/taxi/domain/Direccion.java</file>
             <file>file:/E:/Carrera/Ciclo%20II%202017/Programacion%20IV/Proyecto%20final/TaxiWeb/web/scripts/Proxy.js</file>
             <file>file:/E:/Carrera/Ciclo%20II%202017/Programacion%20IV/Proyecto%20final/TaxiWeb/src/java/cr/ac/una/prograiv/taxi/domain/Direccion.hbm.xml</file>
             <file>file:/E:/Carrera/Ciclo%20II%202017/Programacion%20IV/Proyecto%20final/TaxiWeb/web/map.jsp</file>
@@ -36,22 +40,22 @@
             <file>file:/E:/Carrera/Ciclo%20II%202017/Programacion%20IV/Proyecto%20final/TaxiWeb/src/java/cr/ac/una/prograiv/taxi/dao/ViajeDAO.java</file>
             <file>file:/E:/Carrera/Ciclo%20II%202017/Programacion%20IV/Proyecto%20final/TaxiWeb/web/scripts/domain/Address.js</file>
             <file>file:/E:/Carrera/Ciclo%20II%202017/Programacion%20IV/Proyecto%20final/TaxiWeb/src/java/cr/ac/una/prograiv/taxi/domain/Conductor.java</file>
-            <file>file:/E:/Carrera/Ciclo%20II%202017/Programacion%20IV/Proyecto%20final/TaxiWeb/web/scripts/JsonUtils.js</file>
             <file>file:/E:/Carrera/Ciclo%20II%202017/Programacion%20IV/Proyecto%20final/TaxiWeb/src/java/cr/ac/una/prograiv/taxi/test/TestVehiculo.java</file>
-            <file>file:/E:/Carrera/Ciclo%20II%202017/Programacion%20IV/Proyecto%20final/TaxiWeb/src/java/cr/ac/una/prograiv/taxi/domain/Viaje.hbm.xml</file>
             <file>file:/E:/Carrera/Ciclo%20II%202017/Programacion%20IV/Proyecto%20final/TaxiWeb/src/java/cr/ac/una/prograiv/taxi/dao/ConductorDAO.java</file>
             <file>file:/E:/Carrera/Ciclo%20II%202017/Programacion%20IV/Proyecto%20final/TaxiWeb/src/java/cr/ac/una/prograiv/taxi/bl/BaseBL.java</file>
+            <file>file:/E:/Carrera/Ciclo%20II%202017/Programacion%20IV/Proyecto%20final/TaxiWeb/src/java/cr/ac/una/prograiv/taxi/domain/Viaje.hbm.xml</file>
             <file>file:/E:/Carrera/Ciclo%20II%202017/Programacion%20IV/Proyecto%20final/TaxiWeb/web/styles/style.css</file>
             <file>file:/E:/Carrera/Ciclo%20II%202017/Programacion%20IV/Proyecto%20final/TaxiWeb/src/java/cr/ac/una/prograiv/taxi/controller/UsuarioServlet.java</file>
             <file>file:/E:/Carrera/Ciclo%20II%202017/Programacion%20IV/Proyecto%20final/TaxiWeb/src/java/cr/ac/una/prograiv/taxi/domain/Viaje.java</file>
             <file>file:/E:/Carrera/Ciclo%20II%202017/Programacion%20IV/Proyecto%20final/TaxiWeb/web/scripts/map.js</file>
+            <file>file:/E:/Carrera/Ciclo%20II%202017/Programacion%20IV/Proyecto%20final/TaxiWeb/web/adminUsers.jsp</file>
             <file>file:/E:/Carrera/Ciclo%20II%202017/Programacion%20IV/Proyecto%20final/TaxiWeb/web/scripts/domain/User.js</file>
             <file>file:/E:/Carrera/Ciclo%20II%202017/Programacion%20IV/Proyecto%20final/TaxiWeb/web/scripts/loadNav.js</file>
             <file>file:/E:/Carrera/Ciclo%20II%202017/Programacion%20IV/Proyecto%20final/TaxiWeb/src/java/cr/ac/una/prograiv/taxi/domain/Vehiculo.java</file>
+            <file>file:/E:/Carrera/Ciclo%20II%202017/Programacion%20IV/Proyecto%20final/TaxiWeb/src/java/cr/ac/una/prograiv/taxi/controller/VehiculosServlet.java</file>
             <file>file:/E:/Carrera/Ciclo%20II%202017/Programacion%20IV/Proyecto%20final/TaxiWeb/src/java/cr/ac/una/prograiv/taxi/test/TestViaje.java</file>
             <file>file:/E:/Carrera/Ciclo%20II%202017/Programacion%20IV/Proyecto%20final/TaxiWeb/web/scripts/domain/Driver.js</file>
             <file>file:/E:/Carrera/Ciclo%20II%202017/Programacion%20IV/Proyecto%20final/TaxiWeb/src/java/cr/ac/una/prograiv/taxi/bl/ConductorBL.java</file>
-            <file>file:/E:/Carrera/Ciclo%20II%202017/Programacion%20IV/Proyecto%20final/TaxiWeb/web/editDriverModal.jspf</file>
             <file>file:/E:/Carrera/Ciclo%20II%202017/Programacion%20IV/Proyecto%20final/TaxiWeb/web/imports.jspf</file>
             <file>file:/E:/Carrera/Ciclo%20II%202017/Programacion%20IV/Proyecto%20final/TaxiWeb/src/java/cr/ac/una/prograiv/taxi/utils/HibernateUtil.java</file>
         </group>

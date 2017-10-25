@@ -10,8 +10,9 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Administracion</title>
-        <script src="scripts/admin/adminController.js" type="text/javascript"></script>
         <%@ include file="imports.jspf" %> 
+        <script src="scripts/controllers/adminController.js" type="text/javascript"></script>
+        <script src="scripts/loads/loadAdminCars.js" type="text/javascript"></script>
         <style>
             table{
                 width: 90%;
@@ -36,9 +37,10 @@
                     <td>Modelo</td>
                     <td>Color</td>
                     <td>Estado</td>
+                    <td>Accion</td>
                 </tr>
             </thead>
-            <tbody id="tablaConductores">
+            <tbody id="tablaVehiculos">
 
             </tbody>
         </table>    

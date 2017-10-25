@@ -1,7 +1,6 @@
 package cr.ac.una.prograiv.taxi.test;
 
 import cr.ac.una.prograiv.taxi.domain.*;
-import java.awt.geom.Point2D;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -33,7 +32,7 @@ public class Test {
         }
         Usuario u = new Usuario(
                 idUsuario,
-                new Direccion(0,13.5,12.5),
+                new Direccion(13.5,12.5),
                 nombre,
                 apellidos,
                 fechaNacimiento,

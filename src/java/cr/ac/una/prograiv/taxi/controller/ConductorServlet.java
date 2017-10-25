@@ -46,15 +46,40 @@ public class ConductorServlet extends HttpServlet {
             String json;
 
             ConductorBL cBL = new ConductorBL();
+            BaseBL bbl = new BaseBL();
 
             String accion = request.getParameter("action");
-            System.out.println("accion: " + accion);
+System.out.println("accion: " + accion);
             switch (accion) {
                 case "getConductores":
                     List<Conductor> listaConductores = cBL.findAll(Conductor.class.getName());
 
                     json = gson.toJson(listaConductores);
-                    System.out.println(json);
+System.out.println(json);
+                    out.print(json);
+                    break;
+                case "getConductorId":
+                    try {
+                        json = gson.toJson(bbl.getDao(Conductor.class.getName()).findById(request.getParameter("id")));
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                        json = gson.toJson(new Exception("Error en el servidor: no se encontrol el Conductor : " + request.getParameter("id")));
+                    }
+System.out.println(json);
+                    out.print(json);
+                    break;
+                case "deleteConductorId":
+                    try{
+                        bbl.getDao(Conductor.class.getName()).delete(
+                                bbl.getDao(Conductor.class.getName()).findById(
+                                request.getParameter("id"))
+                        );
+                        json = gson.toJson(new Exception("Se elimino el Conductor con exito"));
+                    }catch(Exception e){
+                        e.printStackTrace();
+                        json = gson.toJson(new Exception("Error en el servidor no se pudo eliminar el Conductor : " + request.getParameter("id")));
+                    }
+System.out.println(json);
                     out.print(json);
                     break;
             }

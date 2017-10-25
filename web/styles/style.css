@@ -54,8 +54,19 @@
 table{    
     width: 90%;
     text-align: center;
+    font-size: 15px;
 }
 table, th, td {
-    border: 5px solid black;
+    border: 2px solid black;
 }
+
 /***********************************Admin***********************************/
+ input[type=checkbox] {
+    border: 0px;
+    width: 100%;
+    height: 6em;
+}
+
+.navbar {
+    border-radius: 0px;
+}

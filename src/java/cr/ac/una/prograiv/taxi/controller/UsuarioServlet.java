@@ -95,6 +95,16 @@ System.out.println("se almaceno el cliente correctamente");
 System.out.println(json);                    
                     out.write(json);
                     break;
+                case "getUsuarios":
+                     try{
+                        json = gson.toJson(bbl.getDao(Usuario.class.getName()).findAll());
+                    }catch(Exception e){
+                        e.printStackTrace();
+                        json = gson.toJson(new Exception("Error en el servidor: no se encontraron Usuarios"));
+                    }
+System.out.println(json);
+                    out.print(json);
+                    break;
             }
             
         }catch(Exception e){e.printStackTrace();}

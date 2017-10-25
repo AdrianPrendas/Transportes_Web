@@ -1,11 +1,10 @@
 
-function Model(storage) {
-    this.Model(storage);
+function Model() {
+    this.Model();
 }
 
 Model.prototype = {
-    Model: function (storage) {
-        this.storage = storage;   
+    Model: function () { 
     }
 };
 

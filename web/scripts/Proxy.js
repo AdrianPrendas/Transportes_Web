@@ -16,8 +16,8 @@ Proxy.login = function (userName, password, callBack, callBack2) {
             callBack(object);
             callBack2();
         }else
-            swal('Oops...',result.detailMessage,'error')
-            
+        swal('Oops...',result.detailMessage,'error')
+
     }).fail(function (e, msg, excepn) {
         swal('**** AJAX ERROR ',msg,'error')
     });
@@ -53,15 +53,113 @@ Proxy.getConductores = function (callBack) {
         }
     }).done(function (result) {
         var arr = JsonUtils.revive(0, result);
-        if (arr.length!=0)
+        if (arr instanceof Array && arr.length!=0)
             callBack(arr);//callback = this.view.ocultarFormLogin();
-        else
-            swal('Oops...',result.detailMessage,'error')
-            
+        else{
+            if (arr instanceof Array && arr.length==0)
+                swal('Oops...',"no hay Conductores para mostrar",'error')
+            else    
+                swal('Oops...',result.detailMessage,'error')
+        }
+
     }).fail(function (e, msg, excepn) {
         swal('**** AJAX ERROR ',msg,'error')
     });
 };
+Proxy.getConductorId = function (id,callBack) {
+    $.ajax({
+        url: "/TaxiWeb/DriverServices",
+        type: "GET",
+        dataType: "json",
+        data: {
+            action: "getConductorId",
+            id:id
+        }
+    }).done(function (result) {
+        var obj = JsonUtils.revive(0, result);
+        if (obj instanceof Driver)
+            callBack(obj);
+        else
+            swal('Oops...',result.detailMessage,'error')
+
+    }).fail(function (e, msg, excepn) {
+        swal('**** AJAX ERROR ',msg,'error')
+    });
+};
+Proxy.deleteConductorId = function(id){
+     $.ajax({
+        url: "/TaxiWeb/DriverServices",
+        type: "GET",
+        dataType: "json",
+        data: {
+            action: "deleteConductorId",
+            id:id
+        }
+    }).done(function (result) {
+        var err = result.detailMessage[0];
+        if(err=='E')//error
+            swal('Oops...',result.detailMessage,'error')
+        else{
+            swal({type: 'success',title: result.detailMessage,showConfirmButton: false,timer: 5000})
+            setTimeout(function(){location.reload();},6000);//refrescar la pagina
+        }
+    }).fail(function (e, msg, excepn) {
+        swal('**** AJAX ERROR ',msg,'error')
+    });
+}
+Proxy.getAutos = function(callBack){
+    $.ajax({
+        url: "/TaxiWeb/CarServices",
+        type: "GET",
+        dataType: "json",
+        data: {
+            action: "getAutos"
+        }
+    }).done(function (result) {
+        var arr = JsonUtils.revive(0, result);
+        if (arr instanceof Array)
+            callBack(arr);
+        else
+            swal('Oops...',result.detailMessage,'error')
+
+    }).fail(function (e, msg, excepn) {
+        swal('**** AJAX ERROR ',msg,'error')
+    });
+}
+Proxy.getUsuarios = function(callBack){
+    $.ajax({
+        url: "/TaxiWeb/UserServices",
+        type: "GET",
+        dataType: "json",
+        data: {
+            action: "getUsuarios"
+        }
+    }).done(function (result) {
+        var arr = JsonUtils.revive(0, result);
+        if (arr instanceof Array)
+            callBack(arr);
+        else
+            swal('Oops...',result.detailMessage,'error')
+
+    }).fail(function (e, msg, excepn) {
+        swal('**** AJAX ERROR ',msg,'error')
+    });
+}
+Proxy.placeName = function(model,callback){
+         $.ajax({
+        url: model.point.query,
+        type: "GET",
+        dataType: "json",
+    }).done(function (result) {
+        console.log(result);
+        if(result.status=="OK")
+            callback(result,model);
+        else
+            swal('Oops...',"algo salio mal en la peticion: "+model.point.query,'error')
+    }).fail(function (e, msg, excepn) {
+        swal('**** AJAX ERROR ',msg,'error')
+    });
+}
 
 /*Proxy.registrarCliente = function (client, callBack) {
  var AJAX_req = new XMLHttpRequest();
@@ -77,7 +175,7 @@ Proxy.getConductores = function (callBack) {
  //console.log(json)
  AJAX_req.send("cliente=" + json);
  
- };*/
+};*/
 /*
  Proxy.getCiudades = function (callBack) {
  var AJAX_req = new XMLHttpRequest();

@@ -10,18 +10,10 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Administracion</title>
+        <link rel="icon" type="img/ico" href="pictures/map.ico">
         <%@ include file="imports.jspf" %> 
         <script src="scripts/controllers/adminController.js" type="text/javascript"></script>
         <script src="scripts/loads/loadAdminDrivers.js" type="text/javascript"></script>
-        <style>
-            table{
-                width: 90%;
-                text-align: center;
-            }
-            table, th, td {
-                border: 1px solid black;
-            }
-        </style>
     </head>
     <body>
         <header>
@@ -29,6 +21,8 @@
         </header>
     <br><br>    
     <center>
+    <button class="btn btn-danger" id="newDriver">Nuevo Conductor</button>
+    <br><br>
         <table>
             <thead bgcolor="lime">
                 <tr>
@@ -52,5 +46,7 @@
         </table>    
     </center>
 
+<%@ include file="dataDriverModal.jspf" %> 
+<%@ include file="mapAddressModal.jspf" %> 
 </body>
 </html>

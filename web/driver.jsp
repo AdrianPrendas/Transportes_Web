@@ -10,9 +10,7 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Driver</title>
-        <%@ include file="imports.jspf" %> 
-        <script src="scripts/controllers/adminController.js" type="text/javascript"></script>
-        <script src="scripts/loads/loadAdminDrivers.js" type="text/javascript"></script>
+        <%@ include file="imports.jspf" %>
     </head>
     <body>
         <header>

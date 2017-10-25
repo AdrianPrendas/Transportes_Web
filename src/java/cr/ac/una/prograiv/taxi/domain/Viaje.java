@@ -1,5 +1,5 @@
 package cr.ac.una.prograiv.taxi.domain;
-// Generated 22-oct-2017 21:54:06 by Hibernate Tools 4.3.1
+// Generated 23-oct-2017 21:29:56 by Hibernate Tools 4.3.1
 
 
 import java.util.Date;
@@ -10,9 +10,9 @@ import java.util.Date;
 public class Viaje  implements java.io.Serializable, Jsonable {
 
 
-     private int idViaje;
-     private Direccion direccionByDireccionDestino;
-     private Direccion direccionByDireccionOrigen;
+     private Integer idViaje;
+     private Direccion direccionByDireccionIdDestino;
+     private Direccion direccionByDireccionIdOrigen;
      private Usuario usuarioByConductor;
      private Usuario usuarioByUsuario;
      private Date fecha;
@@ -25,10 +25,9 @@ public class Viaje  implements java.io.Serializable, Jsonable {
     }
 
 	
-    public Viaje(int idViaje, Direccion direccionByDireccionDestino, Direccion direccionByDireccionOrigen, Usuario usuarioByConductor, Usuario usuarioByUsuario, Date fecha, String duracion, int monto, int puntaje) {
-        this.idViaje = idViaje;
-        this.direccionByDireccionDestino = direccionByDireccionDestino;
-        this.direccionByDireccionOrigen = direccionByDireccionOrigen;
+    public Viaje(Direccion direccionByDireccionIdDestino, Direccion direccionByDireccionIdOrigen, Usuario usuarioByConductor, Usuario usuarioByUsuario, Date fecha, String duracion, int monto, int puntaje) {
+        this.direccionByDireccionIdDestino = direccionByDireccionIdDestino;
+        this.direccionByDireccionIdOrigen = direccionByDireccionIdOrigen;
         this.usuarioByConductor = usuarioByConductor;
         this.usuarioByUsuario = usuarioByUsuario;
         this.fecha = fecha;
@@ -36,10 +35,9 @@ public class Viaje  implements java.io.Serializable, Jsonable {
         this.monto = monto;
         this.puntaje = puntaje;
     }
-    public Viaje(int idViaje, Direccion direccionByDireccionDestino, Direccion direccionByDireccionOrigen, Usuario usuarioByConductor, Usuario usuarioByUsuario, Date fecha, String duracion, int monto, int puntaje, String comentario) {
-       this.idViaje = idViaje;
-       this.direccionByDireccionDestino = direccionByDireccionDestino;
-       this.direccionByDireccionOrigen = direccionByDireccionOrigen;
+    public Viaje(Direccion direccionByDireccionIdDestino, Direccion direccionByDireccionIdOrigen, Usuario usuarioByConductor, Usuario usuarioByUsuario, Date fecha, String duracion, int monto, int puntaje, String comentario) {
+       this.direccionByDireccionIdDestino = direccionByDireccionIdDestino;
+       this.direccionByDireccionIdOrigen = direccionByDireccionIdOrigen;
        this.usuarioByConductor = usuarioByConductor;
        this.usuarioByUsuario = usuarioByUsuario;
        this.fecha = fecha;
@@ -49,26 +47,26 @@ public class Viaje  implements java.io.Serializable, Jsonable {
        this.comentario = comentario;
     }
    
-    public int getIdViaje() {
+    public Integer getIdViaje() {
         return this.idViaje;
     }
     
-    public void setIdViaje(int idViaje) {
+    public void setIdViaje(Integer idViaje) {
         this.idViaje = idViaje;
     }
-    public Direccion getDireccionByDireccionDestino() {
-        return this.direccionByDireccionDestino;
+    public Direccion getDireccionByDireccionIdDestino() {
+        return this.direccionByDireccionIdDestino;
     }
     
-    public void setDireccionByDireccionDestino(Direccion direccionByDireccionDestino) {
-        this.direccionByDireccionDestino = direccionByDireccionDestino;
+    public void setDireccionByDireccionIdDestino(Direccion direccionByDireccionIdDestino) {
+        this.direccionByDireccionIdDestino = direccionByDireccionIdDestino;
     }
-    public Direccion getDireccionByDireccionOrigen() {
-        return this.direccionByDireccionOrigen;
+    public Direccion getDireccionByDireccionIdOrigen() {
+        return this.direccionByDireccionIdOrigen;
     }
     
-    public void setDireccionByDireccionOrigen(Direccion direccionByDireccionOrigen) {
-        this.direccionByDireccionOrigen = direccionByDireccionOrigen;
+    public void setDireccionByDireccionIdOrigen(Direccion direccionByDireccionIdOrigen) {
+        this.direccionByDireccionIdOrigen = direccionByDireccionIdOrigen;
     }
     public Usuario getUsuarioByConductor() {
         return this.usuarioByConductor;

@@ -1,18 +1,18 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
-<!-- Generated 22-oct-2017 21:54:06 by Hibernate Tools 4.3.1 -->
+<!-- Generated 23-oct-2017 21:29:58 by Hibernate Tools 4.3.1 -->
 <hibernate-mapping>
     <class name="cr.ac.una.prograiv.taxi.domain.Viaje" table="viaje" catalog="taxiweb" optimistic-lock="version">
-        <id name="idViaje" type="int">
+        <id name="idViaje" type="java.lang.Integer">
             <column name="idViaje" />
-            <generator class="assigned" />
+            <generator class="identity" />
         </id>
-        <many-to-one name="direccionByDireccionDestino" class="cr.ac.una.prograiv.taxi.domain.Direccion" fetch="select" lazy="false">
-            <column name="Direccion_destino" not-null="true" />
+        <many-to-one name="direccionByDireccionIdDestino" class="cr.ac.una.prograiv.taxi.domain.Direccion" fetch="select" lazy="false">
+            <column name="Direccion_id_destino" not-null="true" />
         </many-to-one>
-        <many-to-one name="direccionByDireccionOrigen" class="cr.ac.una.prograiv.taxi.domain.Direccion" fetch="select" lazy="false">
-            <column name="Direccion_origen" not-null="true" />
+        <many-to-one name="direccionByDireccionIdOrigen" class="cr.ac.una.prograiv.taxi.domain.Direccion" fetch="select" lazy="false">
+            <column name="Direccion_id_origen" not-null="true" />
         </many-to-one>
         <many-to-one name="usuarioByConductor" class="cr.ac.una.prograiv.taxi.domain.Usuario" fetch="select" lazy="false">
             <column name="Conductor" length="20" not-null="true" />

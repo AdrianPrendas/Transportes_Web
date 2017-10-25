@@ -1,5 +1,5 @@
 package cr.ac.una.prograiv.taxi.domain;
-// Generated 22-oct-2017 21:54:06 by Hibernate Tools 4.3.1
+// Generated 23-oct-2017 21:29:56 by Hibernate Tools 4.3.1
 
 import java.util.Date;
 
