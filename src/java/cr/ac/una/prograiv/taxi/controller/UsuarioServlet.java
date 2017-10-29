@@ -11,6 +11,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.Iterator;
 import java.util.List;
+import java.util.stream.Collectors;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -55,11 +56,15 @@ public class UsuarioServlet extends HttpServlet {
             String accion = request.getParameter("action");
 System.out.println("accion: "+accion);
             switch(accion){
-                case "registrarCliente":
+                case "saveUsuario":
                     json = request.getParameter("cliente");
                     user = gson.fromJson(json, Usuario.class);
 System.out.println(user);
                     try{
+                        bbl.getDao(Direccion.class.getName()).save(user.getDireccion());
+                        List<Direccion> listaDirecciones = bbl.getDao(Direccion.class.getName()).findAll();
+                        Direccion d = listaDirecciones.get(listaDirecciones.size()-1);
+                        user.setDireccion(d);
                         bbl.getDao(user.getClass().getName()).save(user);
 System.out.println("se almaceno el cliente correctamente");
                     json = gson.toJson(new Exception("se almaceno el cliente correctamente"));
@@ -101,6 +106,79 @@ System.out.println(json);
                     }catch(Exception e){
                         e.printStackTrace();
                         json = gson.toJson(new Exception("Error en el servidor: no se encontraron Usuarios"));
+                    }
+System.out.println(json);
+                    out.print(json);
+                    break;
+                case "getUsuarioId":
+                        try {
+                        json = gson.toJson(bbl.getDao(Usuario.class.getName()).findById(request.getParameter("id")));
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                        json = gson.toJson(new Exception("Error en el servidor: no se encontrol el Conductor : " + request.getParameter("id")));
+                    }
+System.out.println(json);
+                    out.print(json);
+                    break;
+                     case "deleteUsuarioId":
+                    try{
+                        String id = request.getParameter("id");
+                       
+                        //se filtran los viajes del usuario, para eliminarlos
+                        List<Viaje> listaViajes = bbl.getDao(Viaje.class.getName()).findAll();
+                        listaViajes = listaViajes.stream()
+                                                 .filter(v->
+                                                         v.getUsuarioByConductor().getIdUsuario().equals(id)
+                                                       ||v.getUsuarioByUsuario().getIdUsuario().equals(id))
+                                                 .collect(Collectors.toList());
+                        //se eliminan los viajes del usuario
+                        listaViajes.stream()
+                                   .forEach(v->bbl.getDao(Viaje.class.getName()).delete(v));
+                        
+                        //se filtran los Conductores del usuario, para eliminarlos
+                        List<Conductor> listaConductores = bbl.getDao(Conductor.class.getName()).findAll();
+                        listaConductores = listaConductores.stream()
+                                                 .filter(c->c.getUsuario().getIdUsuario().equals(id))
+                                                 .collect(Collectors.toList());
+                        //se eliminan los Conductores del usuario
+                        listaConductores.stream()
+                                   .forEach(c->bbl.getDao(Conductor.class.getName()).delete(c));
+                        
+                        //se elimina el Usuario
+                        user = (Usuario)bbl.getDao(Usuario.class.getName()).findById(id);
+                        bbl.getDao(Usuario.class.getName()).delete(user);
+                        
+                        json = gson.toJson(new Exception("Se elimino el Usuario con exito"));
+                    }catch(Exception e){
+                        e.printStackTrace();
+                        json = gson.toJson(new Exception("Error en el servidor no se pudo eliminar el Usuario : " + request.getParameter("id")));
+                    }
+System.out.println(json);
+                    out.print(json);
+                    break;
+                    case "editUsuario":
+                    json = request.getParameter("user");
+                    user = gson.fromJson(json, Usuario.class);
+System.out.println(user);
+                    try{
+                        Direccion d = user.getDireccion();
+                        Usuario user2 = (Usuario)bbl.getDao(user.getClass().getName()).findById(user.getIdUsuario());
+                        Direccion d2 = user2.getDireccion();
+                        
+                        d2.setLat(d.getLat());
+                        d2.setLng(d.getLng());
+                        d2.setNombre(d.getNombre());
+                        d2.setZoom(d.getZoom());
+                        bbl.getDao(Direccion.class.getName()).merge(d2);//se elimina la direccion anterior
+                        user.setPassword(user2.getPassword());
+                        user.setDireccion(d2);
+                        
+                        bbl.getDao(user.getClass().getName()).merge(user);
+                        
+                        json = gson.toJson(new Exception("Usuario editado correctamente"));
+                    }catch(Exception e){
+                        e.printStackTrace();
+                        json = gson.toJson(new Exception("Error en el servidor no se edito el Usuario"));
                     }
 System.out.println(json);
                     out.print(json);

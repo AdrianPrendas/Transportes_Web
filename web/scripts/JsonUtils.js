@@ -10,7 +10,7 @@ JsonUtils.revive = function (k, v) {
     if (v instanceof Object && v._class == 'Viaje')
         return new Travel(v.direccionByDireccionDestino, v.direccionByDireccionOrigen, v.usuarioByConductor, v.usuarioByUsuario, v.fecha, v.duracion, v.monto, v.puntaje, v.comentario);
     if (v instanceof Object && v._class == 'Direccion')
-        return new Address(v.id, v.lat, v.lng, v.nombre, v.zoom);
+        return new Address(v.lat, v.lng, v.nombre, v.zoom);
     
     return v;
 };

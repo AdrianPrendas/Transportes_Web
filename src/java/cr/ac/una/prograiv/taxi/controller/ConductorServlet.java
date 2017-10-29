@@ -47,6 +47,7 @@ public class ConductorServlet extends HttpServlet {
 
             ConductorBL cBL = new ConductorBL();
             BaseBL bbl = new BaseBL();
+            Conductor driver;
 
             String accion = request.getParameter("action");
 System.out.println("accion: " + accion);
@@ -81,6 +82,37 @@ System.out.println(json);
                     }
 System.out.println(json);
                     out.print(json);
+                    break;
+                case "editConductor":
+                    json = request.getParameter("driver");
+                    try{
+                        bbl.getDao(Vehiculo.class.getName()).merge(
+                                gson.fromJson(json, Conductor.class).getVehiculo()
+                        );
+                        bbl.getDao(Conductor.class.getName()).merge(
+                                gson.fromJson(json, Conductor.class)
+                        );
+                        json = gson.toJson(new Exception("Se modifico el Conductor con exito"));
+                    }catch(Exception e){
+                        e.printStackTrace();
+                        json = gson.toJson(new Exception("Error en el servidor no se pudo eliminar el Conductor : " + request.getParameter("id")));
+                    }
+System.out.println(json);
+                    out.print(json);
+                    break;
+                case "saveConductor":
+                    json = request.getParameter("driver");
+                    driver = gson.fromJson(json, Conductor.class);
+System.out.println(driver);
+                    try{
+                        bbl.getDao(Conductor.class.getName()).save(driver);
+System.out.println("se almaceno el Conductor correctamente");
+                    json = gson.toJson(new Exception("se almaceno el Conductor correctamente"));
+                    }catch(Exception e){
+                        json = gson.toJson(new Exception("Error en el servidor no se pudo almacenar el Conductor"));
+                        e.printStackTrace();
+                    }
+                    out.write(json);
                     break;
             }
 

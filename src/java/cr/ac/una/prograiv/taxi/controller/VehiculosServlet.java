@@ -54,17 +54,69 @@ public class VehiculosServlet extends HttpServlet {
             
             BaseBL bbl = new BaseBL();
             String json;
+            Vehiculo car;
             
             
             String accion = request.getParameter("action");
 System.out.println("accion: "+accion);
             switch(accion){
-                case "getAutos":
+                case "getVehiculos":
                     try{
                         json = gson.toJson(bbl.getDao(Vehiculo.class.getName()).findAll());
                     }catch(Exception e){
                         e.printStackTrace();
-                        json = gson.toJson(new Exception("Error en el servidor: no se encontraron autos"));
+                        json = gson.toJson(new Exception("Error en el servidor no se encontraron autos"));
+                    }
+System.out.println(json);
+                    out.print(json);
+                    break;
+                case "getVehiculoId":
+                    try {
+                        json = gson.toJson(bbl.getDao(Vehiculo.class.getName()).findById(request.getParameter("id")));
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                        json = gson.toJson(new Exception("Error en el servidor no se encontrol el Vehiculo : " + request.getParameter("id")));
+                    }
+System.out.println(json);
+                    out.print(json);
+                    break;
+                case "saveVehiculo":
+                    json = request.getParameter("car");
+                    car = gson.fromJson(json, Vehiculo.class);
+System.out.println(car);
+                    try{
+                        bbl.getDao(Vehiculo.class.getName()).save(car);
+                        json = gson.toJson(new Exception("Vehiculo almacenado correctamente"));
+                    }catch(Exception e){
+                        e.printStackTrace();
+                        json = gson.toJson(new Exception("Error en el servidor no se guardo el Vehiculo"));
+                    }
+System.out.println(json);
+                    out.print(json);
+                    break;
+                case "editVehiculo":
+                    json = request.getParameter("car");
+                    car = gson.fromJson(json, Vehiculo.class);
+System.out.println(car);
+                    try{
+                        bbl.getDao(Vehiculo.class.getName()).merge(car);
+                        json = gson.toJson(new Exception("Vehiculo editado correctamente"));
+                    }catch(Exception e){
+                        e.printStackTrace();
+                        json = gson.toJson(new Exception("Error en el servidor no se edito el Vehiculo"));
+                    }
+System.out.println(json);
+                    out.print(json);
+                    break;
+                case "deleteVehiculoId":
+                    car = (Vehiculo)bbl.getDao(Vehiculo.class.getName()).findById(request.getParameter("id"));
+System.out.println(car);
+                    try{
+                        bbl.getDao(Vehiculo.class.getName()).delete(car);
+                        json = gson.toJson(new Exception("Vehiculo eliminado correctamente"));
+                    }catch(Exception e){
+                        e.printStackTrace();
+                        json = gson.toJson(new Exception("Error al tratar de eliminar el Vehiculo, hay un conductor asignado "));
                     }
 System.out.println(json);
                     out.print(json);

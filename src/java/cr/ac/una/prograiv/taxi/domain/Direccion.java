@@ -61,6 +61,15 @@ public class Direccion  implements java.io.Serializable, Jsonable{
     public void setZoom(Integer zoom) {
         this.zoom = zoom;
     }
+    
+    public String toString(){
+        return "\n"
+                +"{lat: "+lat
+                +", lng: "+lng
+                +", nombre: "+nombre
+                +", zoom: "+zoom
+                +"}\n";
+    }
 
 }
 

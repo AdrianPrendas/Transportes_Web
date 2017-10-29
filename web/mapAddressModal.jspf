@@ -47,7 +47,7 @@ var marker;
         var directionsDisplay = new google.maps.DirectionsRenderer;
         var geocoder = new google.maps.Geocoder();
         map = new google.maps.Map(document.getElementById('mapAddress'), {
-            zoom: 14,
+            zoom: 13,
             center: {lat: 10.001058, lng: -84.111285}
         });
         directionsDisplay.setMap(map);
@@ -67,6 +67,13 @@ var marker;
                   map: map,
                   position: results[0].geometry.location
               });
+                var lat = marker.position.lat();
+                var lng = marker.position.lng();
+
+                 model.point = {LatLng:{lat,lng},
+                        query:"https://maps.googleapis.com/maps/api/geocode/json?latlng="+lat+","+lng+
+                              "&key=AIzaSyCjuNx2S9O9IDC7lZZjIFWrFPXh8SmdPyQ"
+                                }//agregando los datos de la direccion al modelo
             } else {
                 alert('Geocode was not successful for the following reason: ' + status);
             }
@@ -119,7 +126,7 @@ var marker;
         var lat = marker.position.lat();
         var lng = marker.position.lng();
 
-        model.point = {LatLng:place,
+        model.point = {LatLng:{lat, lng},
             query:"https://maps.googleapis.com/maps/api/geocode/json?latlng="+lat+","+lng+
             "&key=AIzaSyCjuNx2S9O9IDC7lZZjIFWrFPXh8SmdPyQ"
         }//agregando los datos de la direccion al modelo

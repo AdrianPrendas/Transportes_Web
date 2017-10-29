@@ -6,6 +6,7 @@
     <property name="hibernate.connection.driver_class">com.mysql.jdbc.Driver</property>
     <property name="hibernate.connection.url">jdbc:mysql://localhost:3306/taxiWeb?zeroDateTimeBehavior=convertToNull</property>
     <property name="hibernate.connection.username">root</property>
+    <property name="hibernate.connection.isolation">2</property>
     <mapping resource="cr/ac/una/prograiv/taxi/domain/Viaje.hbm.xml"/>
     <mapping resource="cr/ac/una/prograiv/taxi/domain/Conductor.hbm.xml"/>
     <mapping resource="cr/ac/una/prograiv/taxi/domain/Usuario.hbm.xml"/>

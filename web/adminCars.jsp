@@ -13,15 +13,6 @@
         <%@ include file="imports.jspf" %> 
         <script src="scripts/controllers/adminController.js" type="text/javascript"></script>
         <script src="scripts/loads/loadAdminCars.js" type="text/javascript"></script>
-        <style>
-            table{
-                width: 90%;
-                text-align: center;
-            }
-            table, th, td {
-                border: 1px solid black;
-            }
-        </style>
     </head>
     <body>
         <header>
@@ -29,22 +20,27 @@
         </header>
     <br><br>    
     <center>
+        <button class="btn btn-danger" id="newCar">Nuevo Vehiculo</button>
+        <br><br>
         <table>
             <thead bgcolor="lime">
                 <tr>
+                    <td>#</td>
                     <td>Placa</td>
                     <td>año</td>
+                    <td>Marca</td>
                     <td>Modelo</td>
                     <td>Color</td>
                     <td>Estado</td>
                     <td>Accion</td>
                 </tr>
             </thead>
-            <tbody id="tablaVehiculos">
-
-            </tbody>
+            <tbody id="tablaVehiculos"></tbody>
         </table>    
+        <div id="buttonsPagination"></div>
     </center>
+    <br><br><br>
 
+<%@ include file="dataCarModal.jspf" %> 
 </body>
 </html>

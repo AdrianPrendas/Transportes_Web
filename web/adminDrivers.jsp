@@ -9,8 +9,6 @@
     <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Administracion</title>
-        <link rel="icon" type="img/ico" href="pictures/map.ico">
         <%@ include file="imports.jspf" %> 
         <script src="scripts/controllers/adminController.js" type="text/javascript"></script>
         <script src="scripts/loads/loadAdminDrivers.js" type="text/javascript"></script>
@@ -26,11 +24,14 @@
         <table>
             <thead bgcolor="lime">
                 <tr>
+                    <td>#</td>
                     <td>User name</td>
+                    <td>Cedula</td>
                     <td>Nombre</td>
-                    <td>Fecha de nacimiento</td>
-                    <td>Telefono</td>
                     <td>Correo</td>
+                    <td>Telefono</td>
+                    <td>Tipo Licencia</td>
+                    <td>Licencia Vence</td>
                     <td>Vehiculo placa</td>
                     <td>Año</td>
                     <td>Model</td>
@@ -41,10 +42,11 @@
                 </tr>
             </thead>
             <tbody id="tablaConductores">
-
             </tbody>
         </table>    
+        <div id="buttonsPagination"></div>
     </center>
+    <br><br><br>
 
 <%@ include file="dataDriverModal.jspf" %> 
 <%@ include file="mapAddressModal.jspf" %> 

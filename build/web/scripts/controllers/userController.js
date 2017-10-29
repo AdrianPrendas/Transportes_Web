@@ -1,11 +1,14 @@
 
-function UserController() {
-    this.UserController();
+function UserController(view) {
+    this.UserController(view);
 }
 
 UserController.prototype = {
-    UserController: function () {
-
+    UserController: function (view) {
+        this.view = view;
+    },
+    registerClient: function (user) {
+        Proxy.saveUsuario(user);
     },
     login: function (userName, password) {
         Proxy.login(userName, password, this.storeUser,this.loadUser);
@@ -68,8 +71,5 @@ UserController.prototype = {
                             }
                         }
                 )
-            },
-    registerClient: function (user) {
-        Proxy.registrarCliente(user);
-    }
+            }
 };
