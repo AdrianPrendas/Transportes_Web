@@ -16,8 +16,7 @@ public class Test {
     private static Usuario getUsuarioBase() {
         String idUsuario = "itzumarpa",
                 nombre = "Pedro",
-                apellido1 = "Valverde",
-                apellido2 = "Lobo",
+                apellidos = "Valverde valverde",
                 correo = "pedro@gmail.com",
                 password = "1234",
                 direccion = "barreal";
@@ -31,24 +30,22 @@ public class Test {
             e.printStackTrace();
             return null;
         }
-
         Usuario u = new Usuario(
                 idUsuario,
+                new Direccion(13.5,12.5),
                 nombre,
-                apellido1,
-                apellido2,
+                apellidos,
                 fechaNacimiento,
                 telefono,
                 correo,
                 password,
-                esAdministrador,
-                direccion);
+                esAdministrador);
         return u;
     }
 
     private static Vehiculo getVehiculoBase() {
-        //Vehiculo(String placa, int ano, String modelo, String color, boolean estado)
-        return new Vehiculo("BBH-322", 1990, "sedan", "negro", false);
+        //Vehiculo(String placa, int ano, String modelo, String marca, String color, boolean estado) {
+        return new Vehiculo("BBH-322", 1990, "tilda","nisan", "negro", false);
     }
     
     private static Conductor getConductorBase(){
@@ -74,13 +71,13 @@ public class Test {
     
     private static List<Viaje> getViajesBase(){
         List lista = new ArrayList();
-        Conductor c = getConductorBase();
+        /*Conductor c = getConductorBase();
         Usuario u = getUsuarioBase();
         //Viaje(int idViaje, Conductor conductor, Usuario usuario, Date fecha, String duracion, int monto, Serializable direccionNombreOrigen, Serializable direccionNombreDestino, int puntaje) {
-        Point origen = new Point(10.9,11.3);
-        Point destino = new Point(13.9,12.8);
+        Point2D.Double origen = new Point2D.Double(10.9,11.3);
+        Point2D.Double destino = new Point2D.Double(13.9,12.8);
         lista.add(new Viaje(0,c,u,new Date(),"10:28",5000,origen,destino,10));
-        lista.add(new Viaje(0,c,u,new Date(),"9:38",5000,origen,destino,10));
+        /*lista.add(new Viaje(0,c,u,new Date(),"9:38",5000,origen,destino,10));
         lista.add(new Viaje(0,c,u,new Date(),"8:50",5000,origen,destino,10));
         lista.add(new Viaje(0,c,u,new Date(),"13:30",5000,origen,destino,10));
         lista.add(new Viaje(0,c,u,new Date(),"15:00",5000,origen,destino,10));
@@ -88,7 +85,7 @@ public class Test {
         lista.add(new Viaje(0,c,u,new Date(),"17:20",5000,origen,destino,10));
         lista.add(new Viaje(0,c,u,new Date(),"10:28",5000,origen,destino,10));
         lista.add(new Viaje(0,c,u,new Date(),"11:58",5000,origen,destino,10));
-        lista.add(new Viaje(0,c,u,new Date(),"14:10",5000,origen,destino,10));
+        lista.add(new Viaje(0,c,u,new Date(),"14:10",5000,origen,destino,10));*/
         
         return lista;
     }
@@ -101,8 +98,7 @@ public class Test {
         u = TestUsuario.findUsuarioById(u.getIdUsuario());
 
         u.setNombre("Jafeth");
-        u.setApellido1("Campos");
-        u.setApellido2("Campos");
+        u.setApellidos("Campos campos");
         u.setCorreo("jafeth@gmail.com");
 
         u = TestUsuario.mergeUsuario(u);
@@ -122,8 +118,7 @@ public class Test {
         c = TestConductor.findConductorById(c.getUsuarioIdUsuario());
 
         u.setNombre("Jafeth");
-        u.setApellido1("Campos");
-        u.setApellido2("Campos");
+        u.setApellidos("Campos campos");
         u.setCorreo("jafeth@gmail.com");
         c.setPuntuacion(100);
         c.setUsuario(u);

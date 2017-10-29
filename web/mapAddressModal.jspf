@@ -1,0 +1,150 @@
+
+<!-- Modal -->
+<div id="mapAddressModal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h2 class="text-center tituloBonito">Direccion</h2> 
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <button class="btn btn-default" id="whereIaM">Ubicacion</button>
+                        <input type="text" id="place" placeholder="ubicar">
+                        <button class="btn btn-primary" id="find">Buscar</button>
+                        <button class="btn btn-danger" id="clear">Limpiar</button>
+                    </div>
+
+                </div>
+                <br>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div id="mapAddress" style="width: 570px;height:500px;">
+
+                        </div>
+                    </div>      
+                </div>                       
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Salir</button>
+                <button type="button" class="btn btn-success" id="direccionLista">Listo</button>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<script>
+var map;
+var center;
+var marker;
+    function initMap() {
+        marker = new google.maps.Marker();
+        var directionsService = new google.maps.DirectionsService;
+        var directionsDisplay = new google.maps.DirectionsRenderer;
+        var geocoder = new google.maps.Geocoder();
+        map = new google.maps.Map(document.getElementById('mapAddress'), {
+            zoom: 13,
+            center: {lat: 10.001058, lng: -84.111285}
+        });
+        directionsDisplay.setMap(map);
+
+
+        document.getElementById('clear').addEventListener('click', clear);
+        document.getElementById('whereIaM').addEventListener('click', miUbicacion);
+        document.getElementById('find').addEventListener('click', geocodeAddress);
+        map.addListener('click', function (event) {addMarker(event.latLng);});
+
+        function geocodeAddress() {
+            var address = document.getElementById('place').value;
+            geocoder.geocode({'address': address}, function(results, status) {
+              if (status === 'OK') {
+                map.setCenter(results[0].geometry.location);
+                marker = new google.maps.Marker({
+                  map: map,
+                  position: results[0].geometry.location
+              });
+                var lat = marker.position.lat();
+                var lng = marker.position.lng();
+
+                 model.point = {LatLng:{lat,lng},
+                        query:"https://maps.googleapis.com/maps/api/geocode/json?latlng="+lat+","+lng+
+                              "&key=AIzaSyCjuNx2S9O9IDC7lZZjIFWrFPXh8SmdPyQ"
+                                }//agregando los datos de la direccion al modelo
+            } else {
+                alert('Geocode was not successful for the following reason: ' + status);
+            }
+        });
+        }
+
+
+        function miUbicacion() {
+        directionsDisplay.setMap(null);//limpiando el mapa de rutas
+        ubicacion(map, directionsService, directionsDisplay);
+    }
+
+    function ubicacion() {
+        navigator.geolocation.getCurrentPosition(fn_ok, fn_error);
+        
+    }
+    function fn_error(positionError) {
+        switch (positionError.code)
+        {
+            case positionError.PERMISSION_DENIED:
+            alert("No se ha permitido el acceso a la posición del usuario. "+ positionError.message);
+            break;
+            case positionError.POSITION_UNAVAILABLE:
+            alert("No se ha podido acceder a la información de su posición. "+ positionError.message);
+            break;
+            case positionError.TIMEOUT:
+            alert("El servicio ha tardado demasiado tiempo en responder. "+ positionError.message);
+            break;
+            default:
+            alert("Error desconocido.");
+        }
+    }
+    function fn_ok(respuesta, status) {
+        var lat = respuesta.coords.latitude;
+        var lng = respuesta.coords.longitude;
+        var place = {lat: lat, lng: lng};
+        map.setCenter(place);
+        marker.setPosition(place);
+        marker.setMap(map);
+
+        model.point = {LatLng:place,
+            query:"https://maps.googleapis.com/maps/api/geocode/json?latlng="+lat+","+lng+
+            "&key=AIzaSyCjuNx2S9O9IDC7lZZjIFWrFPXh8SmdPyQ"
+        }//agregando los datos de la direccion al modelo
+    }
+    
+    function addMarker(location) {
+        marker.setPosition(location);
+        marker.setMap(map);
+        var lat = marker.position.lat();
+        var lng = marker.position.lng();
+
+        model.point = {LatLng:{lat, lng},
+            query:"https://maps.googleapis.com/maps/api/geocode/json?latlng="+lat+","+lng+
+            "&key=AIzaSyCjuNx2S9O9IDC7lZZjIFWrFPXh8SmdPyQ"
+        }//agregando los datos de la direccion al modelo
+    }
+
+    function noMostrarMarkers() {
+        marker.setMap(null);
+    }
+
+    function clear() {
+        noMostrarMarkers();
+    }
+
+    
+}
+</script>
+
+
+<script async defer
+src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCjuNx2S9O9IDC7lZZjIFWrFPXh8SmdPyQ&callback=initMap">
+</script>

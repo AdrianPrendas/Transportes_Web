@@ -2,7 +2,10 @@ var userController, model;
 
 view = {
     refrescarNav: function (storage) {
-        if (storage.user) {
+        var user = storage.user;
+        if (user==undefined)return;
+        
+        if (user) {
             $("#linkProfile").css("display", "block");
             $("#linkRoutes").css("display", "block");
             $("#divider").css("display", "block");
@@ -24,7 +27,7 @@ view = {
         /*$("#linkUser").css("display","block");
          $("#linkDriver").css("display","block");
          $("#linkAdmin").css("display","block");*/
-    },
+     },
     ocultarFormRegistro: function () {//aqui xq //el proxi lo oculta cuando regresan los datos del server
         $("#register").modal('hide');
     },
@@ -90,9 +93,18 @@ function doValidation(event) {
     if ($("#password").val() != $("#password2").val()) {
         alert("check the password");
     } else {
-        alert("se enviara el formulario" + "\n" + user);
-        userController.registerClient(user);
-    }
+        swal({
+            title: 'Estas seguro?',
+          text: "se enviaran los datos!",
+          type: 'warning',
+          showCancelButton: true,
+          confirmButtonColor: '#3085d6',
+          cancelButtonColor: '#d33',
+          confirmButtonText: 'si, enviar!'
+      }).then(function () {
+          userController.registerClient(user);
+      })      
+  }
 }
 
 

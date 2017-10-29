@@ -8,7 +8,7 @@ import java.util.regex.Pattern;
 
 /**
  *
- * @author Zeneida
+ * @author _Adrian_Prendas_
  */
 public class UsuarioBL  extends BaseBL implements IBaseBL<Usuario, String>{
     

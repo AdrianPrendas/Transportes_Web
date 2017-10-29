@@ -4,8 +4,13 @@
         <%@ include file="imports.jspf" %> 
     </head>
     <body style="height: 100%;">
+<<<<<<< HEAD
         <header style="position: absolute;left:0px;right: 0px;">
             <%@ include file="nav.jspf" %> 
+=======
+        <header>
+            <%@ include file="userNav.jspf" %> 
+>>>>>>> funcional
         </header>
         <div id="floating-panel">
             <b>Start: </b>

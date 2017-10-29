@@ -16,7 +16,6 @@ function initMap() {
     document.getElementById('end').addEventListener('change', onChangeHandler);
     document.getElementById('clear').addEventListener('click', clear);
     document.getElementById('ubicacion').addEventListener('click', miUbicacion);
-    console.log(document.getElementById('buscar'));
     document.getElementById('buscar').addEventListener('click', geocodeAddress);
     map.addListener('click', function (event) {addMarker(event.latLng);});
     

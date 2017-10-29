@@ -12,6 +12,7 @@ public class BaseBL {
         daos.put("cr.ac.una.prograiv.taxi.domain.Viaje",new ViajeDAO());
         daos.put("cr.ac.una.prograiv.taxi.domain.Conductor",new ConductorDAO());
         daos.put("cr.ac.una.prograiv.taxi.domain.Vehiculo", new VehiculoDAO());
+        daos.put("cr.ac.una.prograiv.taxi.domain.Direccion", new DireccionDAO());
     }
 
     public IBaseDAO getDao(String className) {
