@@ -10,6 +10,9 @@ UserController.prototype = {
     registerClient: function (user) {
         Proxy.saveUsuario(user);
     },
+    editUsuario: function(user,modal){//U
+        Proxy.editUsuario(user,modal);
+    },
     login: function (userName, password) {
         Proxy.login(userName, password, this.storeUser,this.loadUser);
     },
@@ -67,7 +70,7 @@ UserController.prototype = {
                 // handling the promise rejection
                         function (dismiss) {
                             if (dismiss === 'timer') {
-                                window.location.href = "index.jsp";
+                                window.location.href = "Logout";
                             }
                         }
                 )

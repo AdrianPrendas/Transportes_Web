@@ -1,8 +1,8 @@
 var Proxy = Proxy || {};
 
-Proxy.login = function (userName, password, callBack, callBack2) {
+Proxy.login = function (userName, password, storeUser, loadUser) {
     $.ajax({
-        url: "/TaxiWeb/UserServices",
+        url: "/Transportes_Web/UserServices",
         type: "POST",
         dataType: "json",
         data: {
@@ -13,18 +13,28 @@ Proxy.login = function (userName, password, callBack, callBack2) {
     }).done(function (result) {
         var object = JsonUtils.revive(0, result);
         if (object instanceof User || object instanceof Driver){
-            callBack(object);
-            callBack2();
+            swal({
+                position: 'center',
+                type: 'success',
+                title: 'Encontrado!!!',
+                showConfirmButton: false,
+                timer: 2500
+            }).then(function(){},
+            function (dismiss) {
+                if (dismiss === 'timer') {
+                    storeUser(object)
+                    loadUser();    
+                }
+            })
         }else
-        swal('Oops...',result.detailMessage,'error')
-
+            swal('Oops...',result.detailMessage,'error')        
     }).fail(function (e, msg, excepn) {
         swal('**** AJAX ERROR ',msg,'error')
     });
 };
 Proxy.saveUsuario = function(user){
     $.ajax({
-        url: "/TaxiWeb/UserServices",
+        url: "/Transportes_Web/UserServices",
         type: "POST",
         dataType: "json",
         data: {
@@ -45,7 +55,7 @@ Proxy.saveUsuario = function(user){
 };
 Proxy.saveVehiculo = function(car, modal){
     $.ajax({
-        url: "/TaxiWeb/CarServices",
+        url: "/Transportes_Web/CarServices",
         type: "POST",
         dataType: "json",
         data: {
@@ -68,7 +78,7 @@ Proxy.saveVehiculo = function(car, modal){
 Proxy.saveConductor = function(driver, modal){
     console.log(driver);
     $.ajax({
-        url: "/TaxiWeb/DriverServices",
+        url: "/Transportes_Web/DriverServices",
         type: "POST",
         dataType: "json",
         data: {
@@ -90,7 +100,7 @@ Proxy.saveConductor = function(driver, modal){
 };
 Proxy.getUsuarios = function(callBack){
     $.ajax({
-        url: "/TaxiWeb/UserServices",
+        url: "/Transportes_Web/UserServices",
         type: "GET",
         dataType: "json",
         data: {
@@ -98,18 +108,20 @@ Proxy.getUsuarios = function(callBack){
         }
     }).done(function (result) {
         var arr = JsonUtils.revive(0, result);
-        if (arr instanceof Array)
+        if (arr instanceof Array){
+            model.dataOfUsuarios = arr;
             callBack(arr);
+        }
         else
             swal('Oops...',result.detailMessage,'error')
-
+        swal.close();
     }).fail(function (e, msg, excepn) {
         swal('**** AJAX ERROR ',msg,'error')
     });
 };
 Proxy.getVehiculos = function(callBack){
     $.ajax({
-        url: "/TaxiWeb/CarServices",
+        url: "/Transportes_Web/CarServices",
         type: "GET",
         dataType: "json",
         data: {
@@ -117,18 +129,20 @@ Proxy.getVehiculos = function(callBack){
         }
     }).done(function (result) {
         var arr = JsonUtils.revive(0, result);
-        if (arr instanceof Array)
+        if (arr instanceof Array){
+            model.dataOfVehiculos = arr;
             callBack(arr);
+        }
         else
             swal('Oops...',result.detailMessage,'error')
-
+        swal.close();
     }).fail(function (e, msg, excepn) {
         swal('**** AJAX ERROR ',msg,'error')
     });
 };
 Proxy.getConductores = function (callBack){
     $.ajax({
-        url: "/TaxiWeb/DriverServices",
+        url: "/Transportes_Web/DriverServices",
         type: "GET",
         dataType: "json",
         data: {
@@ -136,22 +150,24 @@ Proxy.getConductores = function (callBack){
         }
     }).done(function (result) {
         var arr = JsonUtils.revive(0, result);
-        if (arr instanceof Array && arr.length!=0)
+        if (arr instanceof Array && arr.length!=0){
+            model.dataOfConductores = arr;
             callBack(arr);//callback = this.view.ocultarFormLogin();
+        }
         else{
             if (arr instanceof Array && arr.length==0)
                 swal('Oops...',"no hay Conductores para mostrar",'error')
             else    
                 swal('Oops...',result.detailMessage,'error')
         }
-
+        swal.close();
     }).fail(function (e, msg, excepn) {
         swal('**** AJAX ERROR ',msg,'error')
     });
 };
 Proxy.editUsuario = function (car,modal){
     $.ajax({
-        url: "/TaxiWeb/UserServices",
+        url: "/Transportes_Web/UserServices",
         type: "POST",
         dataType: "json",
         data: {
@@ -173,7 +189,7 @@ Proxy.editUsuario = function (car,modal){
 };
 Proxy.editVehiculo = function (car,modal){
     $.ajax({
-        url: "/TaxiWeb/CarServices",
+        url: "/Transportes_Web/CarServices",
         type: "POST",
         dataType: "json",
         data: {
@@ -195,15 +211,15 @@ Proxy.editVehiculo = function (car,modal){
 };
 Proxy.editConductor = function(driver,modal){
   $.ajax({
-        url: "/TaxiWeb/DriverServices",
-        type: "POST",
-        dataType: "json",
-        data: {
-            action: "editConductor",
-            driver:JSON.stringify(driver, JsonUtils.repalcer)
-        }
-    }).done(function (result) {
-        var err = result.detailMessage[0];
+    url: "/Transportes_Web/DriverServices",
+    type: "POST",
+    dataType: "json",
+    data: {
+        action: "editConductor",
+        driver:JSON.stringify(driver, JsonUtils.repalcer)
+    }
+}).done(function (result) {
+    var err = result.detailMessage[0];
         if(err=='E')//error
             swal('Oops...',result.detailMessage,'error')
         else{
@@ -216,8 +232,8 @@ Proxy.editConductor = function(driver,modal){
     });
 },
 Proxy.deleteUsuarioId = function(id){
-   $.ajax({
-    url: "/TaxiWeb/UserServices",
+ $.ajax({
+    url: "/Transportes_Web/UserServices",
     type: "GET",
     dataType: "json",
     data: {
@@ -225,6 +241,7 @@ Proxy.deleteUsuarioId = function(id){
         id:id
     }
 }).done(function (result) {
+    console.log(result)
     var err = result.detailMessage[0];
         if(err=='E')//error
             swal('Oops...',result.detailMessage,'error')
@@ -237,8 +254,8 @@ Proxy.deleteUsuarioId = function(id){
     });
 };
 Proxy.deleteVehiculoId = function(id){
-   $.ajax({
-    url: "/TaxiWeb/CarServices",
+ $.ajax({
+    url: "/Transportes_Web/CarServices",
     type: "GET",
     dataType: "json",
     data: {
@@ -258,8 +275,8 @@ Proxy.deleteVehiculoId = function(id){
     });
 };
 Proxy.deleteConductorId = function(id){
-   $.ajax({
-    url: "/TaxiWeb/DriverServices",
+ $.ajax({
+    url: "/Transportes_Web/DriverServices",
     type: "GET",
     dataType: "json",
     data: {
@@ -280,7 +297,7 @@ Proxy.deleteConductorId = function(id){
 };
 Proxy.getUsuarioId = function (id,callBack) {
     $.ajax({
-        url: "/TaxiWeb/UserServices",
+        url: "/Transportes_Web/UserServices",
         type: "GET",
         dataType: "json",
         data: {
@@ -300,7 +317,7 @@ Proxy.getUsuarioId = function (id,callBack) {
 };
 Proxy.getVehiculoId = function (id,callBack) {
     $.ajax({
-        url: "/TaxiWeb/CarServices",
+        url: "/Transportes_Web/CarServices",
         type: "GET",
         dataType: "json",
         data: {
@@ -320,7 +337,7 @@ Proxy.getVehiculoId = function (id,callBack) {
 };
 Proxy.getConductorId = function (id,callBack) {
     $.ajax({
-        url: "/TaxiWeb/DriverServices",
+        url: "/Transportes_Web/DriverServices",
         type: "GET",
         dataType: "json",
         data: {
@@ -339,7 +356,7 @@ Proxy.getConductorId = function (id,callBack) {
     });
 };
 Proxy.placeName = function(model,callback){
-   $.ajax({
+ $.ajax({
     url: model.point.query,
     type: "GET",
     dataType: "json",

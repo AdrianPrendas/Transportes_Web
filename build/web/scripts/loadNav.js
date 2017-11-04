@@ -2,14 +2,10 @@ var userController, model;
 
 view = {
     refrescarNav: function (storage) {
-<<<<<<< HEAD
-        if (storage.user) {
-=======
         var user = storage.user;
         if (user==undefined)return;
         
         if (user) {
->>>>>>> funcional
             $("#linkProfile").css("display", "block");
             $("#linkRoutes").css("display", "block");
             $("#divider").css("display", "block");
@@ -31,11 +27,7 @@ view = {
         /*$("#linkUser").css("display","block");
          $("#linkDriver").css("display","block");
          $("#linkAdmin").css("display","block");*/
-<<<<<<< HEAD
-    },
-=======
      },
->>>>>>> funcional
     ocultarFormRegistro: function () {//aqui xq //el proxi lo oculta cuando regresan los datos del server
         $("#register").modal('hide');
     },
@@ -101,11 +93,6 @@ function doValidation(event) {
     if ($("#password").val() != $("#password2").val()) {
         alert("check the password");
     } else {
-<<<<<<< HEAD
-        alert("se enviara el formulario" + "\n" + user);
-        userController.registerClient(user);
-    }
-=======
         swal({
             title: 'Estas seguro?',
           text: "se enviaran los datos!",
@@ -118,7 +105,6 @@ function doValidation(event) {
           userController.registerClient(user);
       })      
   }
->>>>>>> funcional
 }
 
 

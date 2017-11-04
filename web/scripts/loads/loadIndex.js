@@ -1,12 +1,11 @@
 var userController, model;
 
-view ={
-    setDataAddressForm: function(data,model){
-        var address = JSON.stringify(model.point.LatLng)+"\n"
-                    + data.results[1].formatted_address+"\n";
+view = {
+    setDataAddressForm: function (data, model) {
+        var address = data.results[1].formatted_address + "\n";
+        //JSON.stringify(model.point.LatLng) + "\n"
 
-         $("#address").val(address);
-         model.point=undefined;
+        $("#address").val(address);
     }
 }
 
@@ -17,38 +16,50 @@ $(document).ready(function () {
     userController = new UserController(view);
     model = new Model();
 
-    userController.loadUser();
+    //userController.loadUser();
+    //userController.logOut();
 
     $("#login").on("submit", function (event) {
         event.preventDefault();
-        userController.login(
-            $("#userName").val(),
-            $("#userPassword").val()
-            );
+        userController.login($("#userName").val(), $("#userPassword").val());
+        swal({
+            title: 'Buscando',
+            text: 'Por favor espere!!!',
+            onOpen: function () {
+                swal.showLoading()
+            }
+        }).then(
+                function () {},
+                // handling the promise rejection
+                function (dismiss) {
+                    if (dismiss === 'timer') {
+                        console.log('I was closed by the timer')
+                    }
+                }
+        );
     });
-
 
     $("#formRegistro").on("submit", doValidation);
 
-    $("#address").mousedown(function(){
+    $("#address").mousedown(function () {
         $("#mapAddressModal").modal("show");
     })
 
     $("#mapAddressModal").on("show.bs.modal", function () {
-        setTimeout(function(){
-        google.maps.event.trigger(map, 'resize');//volver a cargar el mapa
-        center = new google.maps.LatLng(10.001058,-84.111285);//cordenadas de Heredia
-        map.setCenter(center);//centrar en Heredia
-        marker.setMap(null);//quitar marcador
-    },500);
+        setTimeout(function () {
+            google.maps.event.trigger(map, 'resize');//volver a cargar el mapa
+            center = new google.maps.LatLng(10.001058, -84.111285);//cordenadas de Heredia
+            map.setCenter(center);//centrar en Heredia
+            marker.setMap(null);//quitar marcador
+        }, 500);
     })
 
-    $("#direccionLista").on("click",function(){
-        if(model.point==undefined){//si no hay una direccion
-            swal('Oops...',"no has seleccionado una direccion valida",'error')
-        }else{
+    $("#direccionLista").on("click", function () {
+        if (model.point == undefined) {//si no hay una direccion
+            swal('Oops...', "no has seleccionado una direccion valida", 'error')
+        } else {
             $("#mapAddressModal").modal("hide");
-            Proxy.placeName(model,view.setDataAddressForm);
+            Proxy.placeName(model, view.setDataAddressForm);
         }
     })
 
@@ -66,12 +77,8 @@ function doValidation(event) {
     user.password = $("#password").val();
     user.esAdministrador = false;
 
-    var arr = $("#address").val().split("\n");
-    console.log(arr);//[{lat,lng},name]
-    var latLng = JSON.parse(arr[0]);
-    user.direccion = new Address(latLng.lat,latLng.lng,arr[1],14);
-     
-    
+    user.direccion = new Address(model.point.LatLng.lat, model.point.LatLng.lng, $("#address").val(), 14);
+
     swal({
         title: 'Enter your password',
         input: 'password',
@@ -84,12 +91,12 @@ function doValidation(event) {
     }).then(function (password) {
         if (password == user.password) {
             userController.registerClient(user);
-        }else
-        swal('Oops...','No coinside!','error')
-        
+        } else
+            swal('Oops...', 'No coinside!', 'error')
+
     })
 
-    
+
 }
 
 

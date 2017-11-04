@@ -4,7 +4,7 @@
     <div class="modal-dialog">
 
         <!-- Modal content-->
-        <div class="modal-content">
+        <div class="modal-content text-center">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
                 <h2 class="text-center tituloBonito">Direccion</h2> 
@@ -22,7 +22,7 @@
                 <br>
                 <div class="row">
                     <div class="col-md-12">
-                        <div id="mapAddress" style="width: 570px;height:500px;">
+                        <div id="mapAddress" style="width: 100%;height:300px;">
 
                         </div>
                     </div>      
@@ -145,6 +145,4 @@ var marker;
 </script>
 
 
-<script async defer
-src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCjuNx2S9O9IDC7lZZjIFWrFPXh8SmdPyQ&callback=initMap">
-</script>
+<%@ include file="mapKey.jspf" %> 

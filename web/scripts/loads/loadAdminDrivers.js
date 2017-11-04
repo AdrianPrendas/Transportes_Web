@@ -46,7 +46,7 @@ view ={
         
     },
     cargarPagina: function(index){
-        var arr = model.arrayOfConductores[index];
+        var arr = model.arrayOfConductores[index];//[[pag_n-elements],...,n-pages]
         var html ="";
         
         for(var u in arr)
@@ -54,7 +54,8 @@ view ={
         $("#tablaConductores").html(html);        
     },
     buttonsPaginacion: function(n){
-        if(n==1)return;//si solo hay una pagina, no la muestre
+        $("#buttonsPagination").html("");
+        if(n==1)return;//si solo hay una pagina, no muestra los botones
         var html='<ul class="pagination">';
         for(var i = 0; i <n; i++){
             html+='<li><a href="#" onclick="view.cargarPagina('+i+');">'+i+'</a></li>'
@@ -203,43 +204,67 @@ $(document).ready(function(){
         }   
     })
 
+    $("#filtrar").on("submit",function(event){
+        event.preventDefault();
+        var filtro = $("#filtro").val().toLowerCase();
+        if(filtro==""){
+            adminController.getConductores();
+            return;
+        }
+
+        var arr = model.dataOfConductores.filter(function(c,i){
+                        return c.usuarioIdUsuario == filtro
+                            || c.cedula == filtro
+                            || c.usuario.nombre.toLowerCase().includes(filtro)
+                            || c.usuario.apellidos.toLowerCase().includes(filtro)
+                            || c.usuario.correo.toLowerCase().includes(filtro)
+                            || c.usuario.telefono == filtro
+                            || c.tipoLicencia.toLowerCase().includes(filtro)
+                            || c.licenciaVence == filtro
+                            || c.vehiculo.placa.toLowerCase().includes(filtro)
+                            || c.vehiculo.ano == filtro
+                            || c.vehiculo.modelo.toLowerCase().includes(filtro)
+                            || c.vehiculo.marca.toLowerCase().includes(filtro)
+                            || c.vehiculo.color.toLowerCase().includes(filtro)
+                            || c.vehiculo.estado.toString() == filtro;
+                    });
+        console.log(arr);
+        view.cargarTabla(arr);        
+    });
+
     $("#formDriverModal").on("submit",doValidation);
 });
 
 function doValidation(event){
     event.preventDefault();
      
-    if($("#usuarioSelect").css("display")=="none"){
-        var nombre = $("#name_last_final").val().split(" ");
-        model.driver.cedula = $("#cedula").val();
-        model.driver.usuario.nombre = nombre[0];
-        model.driver.usuario.apellidos = nombre[1]+" "+nombre[2];
-        model.driver.tipoLicencia = $("#tipoLicencia").val();
-        model.driver.licenciaVence = $("#fechaLicVence").val();
-        model.driver.vehiculo.ano = $("#vehiculoAnno").val();
-        model.driver.vehiculo.modelo = $("#vehiculoModelo").val();
-        model.driver.vehiculo.marca = $("#vehiculoMarca").val();
-        model.driver.vehiculo.color = $("#vehiculoColor").val();
-        model.driver.vehiculo.estado = $("#vehiculoEstado").prop("checked");
-        model.driver.vehiculo.placa =  
-        adminController.editConductor(model.driver,$("#dataDriverModal"));
-    }
-    else{
-        
-        //Driver(usuarioIdUsuario, usuario, vehiculo, tipoLicencia, licenciaVence, puntuacion, cedula)
+    if($("#usuarioSelect").css("display")=="block"){
         Proxy.getUsuarioId($("#usuarioSelect").val(),function(user){
             Proxy.getVehiculoId($("#vehiculoSelect").val(),function(car){
+                car.estado = $("#vehiculoEstado").prop("checked");
                 var driver = new Driver(
-                                        user.idUsuario,
-                                        user,
-                                        car,
-                                        $("#tipoLicencia").val(),
-                                        $("#fechaLicVence").val(),
-                                        0,
-                                        $("#cedula").val()
-                                    );
+                    $("#usuarioSelect").val(),
+                    user,
+                    car,
+                    $("#tipoLicencia").val(),
+                    $("#fechaLicVence").val(),
+                    0,
+                    $("#cedula").val()
+                )
                 adminController.saveConductor(driver,$("#dataDriverModal"));
-            });
+            })
+        })
+    }else{
+        //Driver(usuarioIdUsuario, usuario, vehiculo, tipoLicencia, licenciaVence, puntuacion, cedula)
+        Proxy.getConductorId($("#alias").val(),function(driver){
+            Proxy.getVehiculoId($("#vehiculoSelect").val(),function(car){
+                car.estado = $("#vehiculoEstado").prop("checked");
+                driver.cedula = $("#cedula").val();
+                driver.tipoLicencia = $("#tipoLicencia").val();
+                driver.licenciaVence = $("#fechaLicVence").val();
+                driver.vehiculo = car;
+                adminController.editConductor(driver,$("#dataDriverModal"));
+            })
         })
     }
 }

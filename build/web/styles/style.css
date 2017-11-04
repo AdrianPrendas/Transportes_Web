@@ -1,8 +1,4 @@
-<<<<<<< HEAD
-
-=======
 /***********************************Index***********************************/
->>>>>>> funcional
 .mensaje{
     width: auto;
     height: auto;
@@ -11,11 +7,7 @@
     font-family: 'Trade Winds', cursive;
     font-size: 100%;
     opacity: 0.7;
-<<<<<<< HEAD
-    
-=======
 
->>>>>>> funcional
 
     border-radius: 11px 11px 11px 11px;
     -moz-border-radius: 11px 11px 11px 11px;
@@ -25,41 +17,24 @@
     -webkit-box-shadow: 3px 4px 5px 0px rgba(0,0,0,0.75);
     -moz-box-shadow: 3px 4px 5px 0px rgba(0,0,0,0.75);
     box-shadow: 3px 4px 5px 0px rgba(0,0,0,0.75);
-<<<<<<< HEAD
-    
-=======
 
->>>>>>> funcional
     margin-left: 10%;
     margin-top: 10%;
     margin-right: 50%;
     margin-bottom: 50%;
-<<<<<<< HEAD
-    
-    padding: 10px 10px 0px 10px;
-   
-}
-
-.carousel{
-    width: 100%;
-    height: 100%;
-}
-.imageCarrucel{
-    width: 100%;
-    height: 100%;
-=======
 
     padding: 10px 10px 0px 10px;
 
->>>>>>> funcional
 }
 .tituloBonito{
-    font-size:50px;
-    font-family: 'Libre Barcode 39 Text', cursive;
+    font-size:30px;
+    font-family: 'Nosifer', cursive;
 }
-<<<<<<< HEAD
 
-=======
+#myCarousel{width:100%;}
+
+
+/* Phones <768  by default container 100%, columns 100%  */
 #indexHead{
     background-color:#F8F8F8;height:130px;
 
@@ -68,11 +43,23 @@
     box-shadow: 0px 2px 5px 0px rgba(0,0,0,0.75);
 
 }
+@media screen and (min-width: 767px) {  /* Tablets 768-992 */
+    #indexHead {height:130px;}
+}
+@media screen and (max-width: 767px) {  /* Regular desktop 992-1200 */
+    #indexHead {height:180px;}
+}
+
+@media screen and (max-width: 324px) {  /* Large desktop >1200 */
+   #indexHead {height:220px;}
+}
+
+
 
 #formLogin{
     margin-top:10px;
 }
-#formClient{
+.div{
     background-color:#F8F8F8;
 
     -webkit-box-shadow: 0px 2px 5px 0px rgba(0,0,0,0.75);
@@ -82,7 +69,7 @@
 /***********************************Index***********************************/
 /***********************************Admin***********************************/
 table{    
-    width: 90%;
+    width: 95%;
     text-align: center;
     font-size: 15px;
 }
@@ -92,7 +79,7 @@ table, th, td {
 tbody tr:nth-child(even) {background: #CCC}
 tbody tr:nth-child(odd) {background: #FFF}
 /***********************************Admin***********************************/
- input[type=checkbox] {
+input[type=checkbox] {
     border: 0px;
     width: 100%;
     height: 6em;
@@ -101,4 +88,52 @@ tbody tr:nth-child(odd) {background: #FFF}
 .navbar {
     border-radius: 0px;
 }
->>>>>>> funcional
+
+h3{
+    font-family: 'Special Elite', cursive;
+    font-size:20px;
+}
+
+h1{
+    font-family: 'Special Elite', cursive;
+    font-size:30px;
+}
+
+label{
+    font-family: 'Special Elite', cursive;
+    font-size:15px;
+}
+
+th{
+    font-family: 'Special Elite', cursive;
+    font-size:15px;
+    text-align: center;
+}
+
+td{
+   font-weight: bold;
+   font-family: 'Special Elite', cursive;
+   font-size:13px;
+   text-align: center;
+}
+
+
+.btn{
+    font-weight: bold;
+    font-family: 'Special Elite', cursive;
+    font-size:14px;
+    text-align: center;
+}
+
+input, textarea, a{
+    font-family: 'Special Elite', cursive;
+    font-size:14px;
+    text-align: center;
+}
+
+.navbar-brand{
+    font-weight: bold;
+    font-family: 'Special Elite', cursive;
+    font-size:20px;
+    text-align: center;   
+}

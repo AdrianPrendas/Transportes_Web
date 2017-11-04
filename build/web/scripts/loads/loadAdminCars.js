@@ -1,10 +1,10 @@
 var adminController,
-    model;
+model;
 var ELEMENTS_F_PAGE = 2;
 
 view ={
     cargarTabla:function(data){
-        
+
         var count = 0;
         var html ="";
         for(var Vehiculo in data){
@@ -17,14 +17,14 @@ view ={
             html += "<td>"+data[Vehiculo].color+"</td>";
             html += "<td>"+data[Vehiculo].estado+"</td>";
             html += '<td><button type="button" class="btn btn-default btn-xs" aria-label="Left Align" onclick=" adminController.getVehiculoId('+"'"+data[Vehiculo].placa+"'"+');">'+
-                        '<span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>'+
-                    '</button>'+
-                    '<button type="button" class="btn btn-default btn-xs" aria-label="Left Align" onclick="adminController.deleteVehiculoId('+"'"+data[Vehiculo].placa+"'"+');">'+
-                        '<span class="glyphicon glyphicon-remove" aria-hidden="true"></span>'+
-                    '</button></td>'
-                    
+            '<span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>'+
+            '</button>'+
+            '<button type="button" class="btn btn-default btn-xs" aria-label="Left Align" onclick="adminController.deleteVehiculoId('+"'"+data[Vehiculo].placa+"'"+');">'+
+            '<span class="glyphicon glyphicon-remove" aria-hidden="true"></span>'+
+            '</button></td>'
+
             html += "</tr>";
-         }
+        }
 
         var arr = html.split("</tr>");//cada registro
             arr = arr.filter((r)=>r!="");//quitar registro vacio, bug??
@@ -35,8 +35,8 @@ view ={
         console.log(tam);
         for(var i=0;i<tam;i++)
             narr.push(arr.slice(i*ELEMENTS_F_PAGE,(i+1)*ELEMENTS_F_PAGE));
-
-        model.arrayOfVehiculos=narr;//[[ELEMENTS_F_PAGE],...,n]
+        
+        model.arrayOfVehiculos = narr;//[[ELEMENTS_F_PAGE],...,n]
         view.cargarPagina(0);
         view.buttonsPaginacion(model.arrayOfVehiculos.length);
         
@@ -50,7 +50,8 @@ view ={
         $("#tablaVehiculos").html(html);        
     },
     buttonsPaginacion: function(n){
-        if(n==1)return;//si solo hay una pagina, no la muestre
+        $("#buttonsPagination").html("");
+        if(n==1)return;//si solo hay una pagina, no muestra los botones
         var html='<ul class="pagination">';
         for(var i = 0; i <n; i++){
             html+='<li><a href="#" onclick="view.cargarPagina('+i+');">'+i+'</a></li>'
@@ -78,34 +79,52 @@ view ={
 $(document).ready(function(){
    adminController = new AdminController(view);
    model = new Model();
-   
+
    adminController.getVehiculos();
 
    $("#newCar").on("click",function(){
-        $("#dataCarModal").modal("show");
-   })
+    $("#dataCarModal").modal("show");
+})
 
    $("#dataCarModal").on("hide.bs.modal", function () {
-        $("#placa").prop("readonly", false);
-        document.getElementById("formCarModal").reset();  
-        $("#divEstado").css('display',"none");      
-    })
+    $("#placa").prop("readonly", false);
+    document.getElementById("formCarModal").reset();  
+    $("#divEstado").css('display',"none");      
+})
 
    $("#formCarModal").on("submit",function(event){
+    event.preventDefault();
+    var car = new Car(
+        $("#placa").val(),
+        $("#anno").val(),
+        $("#modelo").val(),
+        $("#marca").val(),
+        $("#color").val(),
+        $("#vehiculoEstado").prop("checked"));
+    console.log(car)
+    if($("#placa").prop("readonly")==false)
+        adminController.saveVehiculo(car,$("#dataCarModal"));
+    else
+        adminController.editVehiculo(car,$("#dataCarModal"));  
+})
+
+   $("#filtrar").on("submit",function(event){
         event.preventDefault();
-        var car = new Car(
-            $("#placa").val(),
-            $("#anno").val(),
-            $("#modelo").val(),
-            $("#marca").val(),
-            $("#color").val(),
-            $("#vehiculoEstado").prop("checked"));
-        console.log(car)
-         if($("#placa").prop("readonly")==false)
-            adminController.saveVehiculo(car,$("#dataCarModal"));
-        else
-            adminController.editVehiculo(car,$("#dataCarModal"));  
-   })
+    
+        var filtro = $("#filtro").val().toLowerCase();
+        if(filtro=="")
+            return adminController.getVehiculos();
+        
+        var arr = model.dataOfVehiculos.filter(function(v,i){
+                return v.placa.toLowerCase().includes(filtro)
+                || v.ano == filtro
+                || v.marca.toLowerCase().includes(filtro)
+                || v.modelo.toLowerCase().includes(filtro)
+                || v.color.toLowerCase().includes(filtro)
+                || v.estado.toString() == filtro;
+             });
+        view.cargarTabla(arr);        
+    });
 
 });
 

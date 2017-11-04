@@ -1,8 +1,8 @@
 
-function areYouSure(f,id){
+function areYouSure(f,id, msg){
   swal({
     title: 'Estas seguro?',
-    text: "no vas a poder revertir los cambios despues de esto!",
+    text: msg,
     type: 'warning',
     showCancelButton: true,
     confirmButtonColor: '#3085d6',
@@ -11,6 +11,23 @@ function areYouSure(f,id){
   }).then(function () {
     f(id);
   })
+}
+
+function loading(){
+  swal({
+          title: 'Cargando...',
+          text: 'por favor espere!',
+          onOpen: function () {
+              swal.showLoading()
+          }
+      }).then(function () {},
+              // handling the promise rejection
+                  function (dismiss) {
+                      if (dismiss === 'timer') {
+                         console.log('I was closed by the timer')
+                      }
+                  }
+      );
 }
 
 function AdminController(view) {
@@ -25,13 +42,14 @@ AdminController.prototype = {
     Proxy.saveUsuario(user);
   },
   getUsuarios: function(){//R
-    Proxy.getUsuarios(this.view.cargarTabla); 
+      loading();
+      Proxy.getUsuarios(this.view.cargarTabla); 
   },
   editUsuario: function(user,modal){//U
     Proxy.editUsuario(user,modal);
   },
   deleteUsuarioId: function(id){//D
-    areYouSure(Proxy.deleteUsuarioId,id);
+    areYouSure(Proxy.deleteUsuarioId,id, "no vas a poder revertir los cambios despues de esto, tabien se eliminaran los viajes del usuario!!!");
   },
   getUsuarioId: function(id){//Read one
     Proxy.getUsuarioId(id,this.view.cargarDataUserModal); 
@@ -41,13 +59,14 @@ AdminController.prototype = {
     Proxy.saveConductor(driver,modal); 
   },
   getConductores: function(){//R
+    loading();
     Proxy.getConductores(this.view.cargarTabla);
   },
   editConductor: function(driver,modal){//U
     Proxy.editConductor(driver,modal); 
   },
   deleteConductorId: function(id){//D
-    areYouSure(Proxy.deleteConductorId,id);
+    areYouSure(Proxy.deleteConductorId,id, "no vas a poder revertir los cambios despues de esto!");
   },
   getConductorId: function(id){//Read one
    Proxy.getConductorId(id,this.view.cargarDataDriverModal);
@@ -57,13 +76,14 @@ AdminController.prototype = {
     Proxy.saveVehiculo(car,modal);
   },
   getVehiculos: function(){//R
+    loading();
   	Proxy.getVehiculos(this.view.cargarTabla);	
   },
   editVehiculo: function(car, modal){//U
     Proxy.editVehiculo(car,modal);
   },
   deleteVehiculoId: function(id){//D
-    areYouSure(Proxy.deleteVehiculoId,id);      
+    areYouSure(Proxy.deleteVehiculoId,id, "no vas a poder revertir los cambios despues de esto!");      
   },
   getVehiculoId: function(id){//Read one
     Proxy.getVehiculoId(id,this.view.cargarDataCarModal);

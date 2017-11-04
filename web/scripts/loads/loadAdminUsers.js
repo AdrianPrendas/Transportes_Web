@@ -47,7 +47,8 @@ view ={
         $("#tablaUsuarios").html(html);        
     },
     buttonsPaginacion: function(n){
-        if(n==1)return;//si solo hay una pagina, no la muestre
+        $("#buttonsPagination").html("");
+        if(n==1)return;//si solo hay una pagina, no muestra los botones
         var html='<ul class="pagination">';
         for(var i = 0; i <n; i++){
             html+='<li><a href="#" onclick="view.cargarPagina('+i+');">'+i+'</a></li>'
@@ -68,7 +69,7 @@ view ={
 
         $("#divEstado").css('display',"block");
         $("#password").css('display', "none");
-        $("#password").val("invalidPassword");
+        $("#password").val("undefined");
 
         $("#dataUserModal").modal("show");
     },
@@ -127,6 +128,26 @@ $(document).ready(function(){
             Proxy.placeName(model,view.setDataAddressForm);
         }
     })
+
+    $("#filtrar").on("submit",function(event){
+        event.preventDefault();
+    
+        var filtro = $("#filtro").val().toLowerCase();
+        if(filtro=="")
+            return adminController.getUsuarios();
+        
+        var arr = model.dataOfUsuarios.filter(function(u,i){
+                return u.idUsuario.toLowerCase().includes(filtro)
+                || u.nombre.toLowerCase().includes(filtro)
+                || u.apellidos.toLowerCase().includes(filtro)
+                || u.direccion.nombre.toLowerCase().includes(filtro)
+                || u.fechaNacimiento == filtro
+                || u.telefono == filtro
+                || u.correo.toLowerCase().includes(filtro)
+                || u.esAdministrador.toString() == filtro;
+             });
+        view.cargarTabla(arr);        
+    });
 
 });
 

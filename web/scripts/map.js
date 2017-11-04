@@ -1,3 +1,5 @@
+
+
 function initMap() {
     var markers = {};
     var markerUbicacion = new google.maps.Marker();
@@ -11,31 +13,51 @@ function initMap() {
     });
     directionsDisplay.setMap(map);
     
-    
-    document.getElementById('start').addEventListener('change', onChangeHandler);
-    document.getElementById('end').addEventListener('change', onChangeHandler);
-    document.getElementById('clear').addEventListener('click', clear);
+    document.getElementById('clean').addEventListener('click', clean);
     document.getElementById('ubicacion').addEventListener('click', miUbicacion);
-    document.getElementById('buscar').addEventListener('click', geocodeAddress);
+    document.getElementById('start').addEventListener('click',function(){
+        swalOrigenDestino("start", "Origen");
+    });
+    document.getElementById('end').addEventListener('click', function(){
+        swalOrigenDestino("end", "Destino");
+    });
+    document.getElementById('buscar').addEventListener('click', function(){
+        clean();
+        var address = document.getElementById('destinoABuscar').value;
+        geocodeAddress(address,"start");
+    });
     map.addListener('click', function (event) {addMarker(event.latLng);});
     
-     function geocodeAddress() {
-        var address = document.getElementById('destinoABuscar').value;
+    function geocodeAddress(address,ubicacion) {
         geocoder.geocode({'address': address}, function(results, status) {
           if (status === 'OK') {
             map.setCenter(results[0].geometry.location);
-            markerdestino = new google.maps.Marker({
-              map: map,
-              position: results[0].geometry.location
+
+        if(ubicacion == "start"){
+            markerUbicacion = new google.maps.Marker({
+                map: map,
+                position: results[0].geometry.location
             });
-          } else {
+            markerUbicacion.setPosition(location);
+            markers['ubicacion'] = markerUbicacion;
+        }else if(ubicacion == "end"){
+            markerdestino = new google.maps.Marker({
+                map: map,
+                position: results[0].geometry.location
+            });
+            markerdestino.setPosition(location);
+            markers['destino'] = markerdestino;
+        }
+
+        genRoute();
+
+        } else {
             alert('Geocode was not successful for the following reason: ' + status);
-          }
-        });
-      }
+        }
+    });
+    }
 
     function onChangeHandler() {
-        clear();
         directionsDisplay.setMap(map);//vamos a trazar una ruta
         calculateAndDisplayRoute(directionsService, directionsDisplay);
     }
@@ -50,30 +72,30 @@ function initMap() {
         
     }
     function fn_error(positionError) {
-            switch (positionError.code)
-            {
-                case positionError.PERMISSION_DENIED:
-                    alert("No se ha permitido el acceso a la posición del usuario. "+ positionError.message);
-                    break;
-                case positionError.POSITION_UNAVAILABLE:
-                    alert("No se ha podido acceder a la información de su posición. "+ positionError.message);
-                    break;
-                case positionError.TIMEOUT:
-                    alert("El servicio ha tardado demasiado tiempo en responder. "+ positionError.message);
-                    break;
-                default:
-                    alert("Error desconocido.");
-            }
+        switch (positionError.code)
+        {
+            case positionError.PERMISSION_DENIED:
+            alert("No se ha permitido el acceso a la posición del usuario. "+ positionError.message);
+            break;
+            case positionError.POSITION_UNAVAILABLE:
+            alert("No se ha podido acceder a la información de su posición. "+ positionError.message);
+            break;
+            case positionError.TIMEOUT:
+            alert("El servicio ha tardado demasiado tiempo en responder. "+ positionError.message);
+            break;
+            default:
+            alert("Error desconocido.");
         }
-        function fn_ok(respuesta, status) {
-            var lat = respuesta.coords.latitude;
-            var lng = respuesta.coords.longitude;
-            var place = {lat: lat, lng: lng};
-            map.setCenter(place);
-            markerUbicacion.setPosition(place);
-            markerUbicacion.setMap(map);
-            markers['ubicacion'] = markerUbicacion;
-        }
+    }
+    function fn_ok(respuesta, status) {
+        var lat = respuesta.coords.latitude;
+        var lng = respuesta.coords.longitude;
+        var place = {lat: lat, lng: lng};
+        map.setCenter(place);
+        markerUbicacion.setPosition(place);
+        markerUbicacion.setMap(map);
+        markers['ubicacion'] = markerUbicacion;
+    }
     
     function addMarker(location) {
         if(!markers['ubicacion']){
@@ -85,7 +107,10 @@ function initMap() {
             markerdestino.setMap(map);
             markers['destino'] = markerdestino;
         }
-       
+
+        genRoute();
+    }
+    function genRoute(){
         if (Object.keys(markers).length == 2) {
             var u = {lat: markers['ubicacion'].getPosition().lat(), lng: markers['ubicacion'].getPosition().lng()};
             var d = {lat: markers['destino'].getPosition().lat(), lng: markers['destino'].getPosition().lng()};
@@ -111,7 +136,7 @@ function initMap() {
             markers[k].setMap(null);
     }
 
-    function clear() {
+    function clean() {
         for (k in markers)
             markers[k].setMap(null);
         markers = {};
@@ -121,8 +146,8 @@ function initMap() {
     }
 
     function calculateAndDisplayRoute(directionsService, directionsDisplay) {
-        var origen = JSON.parse(document.getElementById('start').value);
-        var destino = JSON.parse(document.getElementById('end').value);
+        var origen = markerUbicacion.position;
+        var destino = markerdestino.position;
         map.setCenter(origen);
         directionsService.route({
             origin: origen,
@@ -135,6 +160,34 @@ function initMap() {
                 window.alert('Directions request failed due to ' + status);
             }
         });
+    }
+
+    function swalOrigenDestino(ubicacion,title){
+        swal({
+              title: title,
+              input: 'text',
+              confirmButtonText: 'Buscar',
+              showLoaderOnConfirm: true,
+              preConfirm: function (address) {
+                return new Promise(function (resolve, reject) {
+                  setTimeout(function() {
+                    if (address === '') {
+                      reject('Introduce alguna Ubicacion.')
+                  } else {
+                      geocodeAddress(address,ubicacion);
+                          resolve();
+                  }
+            }, 2000)
+            })
+            },
+        }).then(function (ubicacion) {
+            swal({
+                type: 'success',
+                title: 'Encontrado!!!',
+                showConfirmButton: false,
+                timer: 1500
+            })
+        })
     }
 }
 

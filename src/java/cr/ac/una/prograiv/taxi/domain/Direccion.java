@@ -63,12 +63,7 @@ public class Direccion  implements java.io.Serializable, Jsonable{
     }
     
     public String toString(){
-        return "\n"
-                +"{lat: "+lat
-                +", lng: "+lng
-                +", nombre: "+nombre
-                +", zoom: "+zoom
-                +"}\n";
+        return this.nombre;
     }
 
 }

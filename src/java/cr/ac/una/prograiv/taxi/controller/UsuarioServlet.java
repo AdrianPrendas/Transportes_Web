@@ -17,6 +17,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -45,16 +46,16 @@ public class UsuarioServlet extends HttpServlet {
                     .registerSubtype(Conductor.class, "Conductor")
                     .registerSubtype(Vehiculo.class, "Vehiculo")
                     .registerSubtype(Viaje.class, "Viaje");
-                    
+            
             Gson gson = new GsonBuilder().registerTypeAdapterFactory(rta).setDateFormat("dd/mm/yyyy").create();
             
             BaseBL bbl = new BaseBL();
             UsuarioBL ubl = new UsuarioBL();
             String json;
-            Usuario user;
+            Usuario user = new Usuario();
             
             String accion = request.getParameter("action");
-System.out.println("accion: "+accion);
+System.out.format("accion: %s %n",accion);
             switch(accion){
                 case "saveUsuario":
                     json = request.getParameter("cliente");
@@ -75,28 +76,30 @@ System.out.println("se almaceno el cliente correctamente");
                     out.write(json);
                     break;
                 case "login":
-                    user = new Usuario();
-                    json = request.getParameter("userName");
-                    user.setNombre(json);
-                    json = request.getParameter("password");
-                    user.setPassword(json);
+                    user.setNombre(request.getParameter("userName"));
+                    user.setPassword(request.getParameter("password"));
                     
                     user = ubl.login(user);
                     if(user != null){
-                        List<Conductor> listaConductores = ubl.getDao(Conductor.class.getName()).findAll();
-                        Iterator<Conductor> it = listaConductores.iterator();
-                        Conductor c = new Conductor();
-                        for(;it.hasNext();){
-                            c = it.next();
-                            if(c.equals(user))
-                                break;
+                        HttpSession session=request.getSession(true); 
+                        session.setAttribute("usuario", user); 
+                        session.setAttribute("loginStatus", "login"); 
+                            
+                        Conductor c = (Conductor)bbl.getDao(Conductor.class.getName()).findById(user.getIdUsuario());
+                        if(c!=null){
+                            session.setAttribute("tipo", "driver"); 
+                            json = gson.toJson(c);
                         }
-                        if(c.equals(user))
-                           json = gson.toJson(c);
-                        else
-                           json = gson.toJson(user);
+                        else{
+                            if(user.isEsAdministrador())
+                                session.setAttribute("tipo", "admin"); 
+                            else
+                                session.setAttribute("tipo", "user"); 
+                            json = gson.toJson(user);
+                        }
+                        
                     }else
-                        json = gson.toJson(new Exception("error: usuario y/o contraseña invalidos"));
+                        json = gson.toJson(new Exception("Error usuario y/o contraseña invalidos"));
 System.out.println(json);                    
                     out.write(json);
                     break;
@@ -136,13 +139,13 @@ System.out.println(json);
                                    .forEach(v->bbl.getDao(Viaje.class.getName()).delete(v));
                         
                         //se filtran los Conductores del usuario, para eliminarlos
-                        List<Conductor> listaConductores = bbl.getDao(Conductor.class.getName()).findAll();
+                        /*List<Conductor> listaConductores = bbl.getDao(Conductor.class.getName()).findAll();
                         listaConductores = listaConductores.stream()
                                                  .filter(c->c.getUsuario().getIdUsuario().equals(id))
                                                  .collect(Collectors.toList());
                         //se eliminan los Conductores del usuario
                         listaConductores.stream()
-                                   .forEach(c->bbl.getDao(Conductor.class.getName()).delete(c));
+                                   .forEach(c->bbl.getDao(Conductor.class.getName()).delete(c));*/
                         
                         //se elimina el Usuario
                         user = (Usuario)bbl.getDao(Usuario.class.getName()).findById(id);
@@ -151,7 +154,7 @@ System.out.println(json);
                         json = gson.toJson(new Exception("Se elimino el Usuario con exito"));
                     }catch(Exception e){
                         e.printStackTrace();
-                        json = gson.toJson(new Exception("Error en el servidor no se pudo eliminar el Usuario : " + request.getParameter("id")));
+                        json = gson.toJson(new Exception("Error hay un Conductor relacionado ID:" + request.getParameter("id")+" Intente Eliminarlo primero"));
                     }
 System.out.println(json);
                     out.print(json);
@@ -170,7 +173,13 @@ System.out.println(user);
                         d2.setNombre(d.getNombre());
                         d2.setZoom(d.getZoom());
                         bbl.getDao(Direccion.class.getName()).merge(d2);//se elimina la direccion anterior
-                        user.setPassword(user2.getPassword());
+                        if(user.getPassword().equals("undefined")){//si es el adiministrador el que modifica
+                            user.setPassword(user2.getPassword());//la contraseña de siempre
+                        }else{//si es el mismo usuario el que edita su informacion
+                            HttpSession session=request.getSession(true); 
+                            session.setAttribute("usuario", user);//se carga a la session denuevo los datos 
+                        }
+                            
                         user.setDireccion(d2);
                         
                         bbl.getDao(user.getClass().getName()).merge(user);

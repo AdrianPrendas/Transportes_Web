@@ -1,5 +1,5 @@
 <nav class="navbar navbar-default"  style="position: absolute;z-index:5;left:0;right:0;">
-    <div class="container-fluid">
+    <div class="container-fluid text-center">
         <!-- Brand and toggle get grouped for better mobile display -->
         <div class="navbar-header">
             <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" >
@@ -8,54 +8,64 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="map.jsp">TaxiWeb</a>
+            <a class="navbar-brand" href="index.jsp">TaxiWeb</a>
         </div>
 
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav navbar-left">
-                <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" >Mapa<span class="caret"></span></a>
-                    <ul class="dropdown-menu">
-                        <li><a href="#">Ubicacion</a></li>
-                        <li><a href="#">Origen</a></li>
-                        <li><a href="#">Destino</a></li>
-                    </ul>
+                <li id="mapLink"><a href="userMap.jsp">Mapa</a></li>
+                <li>
+                    <a href="#" id="ubicacion" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">Ubicacion</a>
                 </li>
-                <li><a href="#">Rutas preferidas</a></li>
-                <li><a href="#">Choferes preferidos</a></li>
-                <li><a href="#">Buscar Transporte</a></li>
+                <li>
+                    <a href="#" id="start" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">Origen</a>
+                </li>
+                <li>
+                    <a href="#" id="end" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">Destino</a>
+                </li>
+                <li>
+                    <a href="#" id="clean" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">Limpiar</a>
+                </li>    
             </ul>
 
             <form class="navbar-form navbar-left" onsubmit="return false;" id="mapaBuscador">
                 <div class="form-group">
                     <input type="text" class="form-control" placeholder="Destino" id="destinoABuscar">
                 </div>
-                <button type="submit" class="btn btn-default" id="buscar">Buscar</button>
+                <button type="submit" class="btn btn-default" id="buscar" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">Buscar</button>    
             </form>
             <ul class="nav navbar-nav navbar-right">
-                <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" >Acerca del proyecto <span class="caret"></span></a>
-                    <ul class="dropdown-menu">
-                        <li><a href="#">Servicios que brindamos</a></li>
-                        <li><a href="Referente.jsp">Referente Institucional</a></li>
-                        <li><a href="Somos.jsp">Quienes somos</a></li>
-                        <li><a href="contact.jsp">Contactenos</a></li>
-                    </ul>
-                </li>
-                <li id="linkDriver" style="display: none;"><a href="Choferes.jsp">Chofer</a></li>
-                <li id="linkAdmin" style="display: none;"><a href="Administrador.jsp">Administrador</a></li> 
-                <li class="dropdown">
-                    <a id="linkUser" href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true">User <span class="caret"></span></a>
-                    <ul class="dropdown-menu">
-                        <li><a href="user.jsp">perfil</a></li>
-                        <li><a href="#">viajes realizados</a></li>
-                        <li class="divider"></li>
-                        <li><a href="#" id="logout">salir</a></li>
-                    </ul>
-                </li>
-            </ul>
-        </div><!-- /.navbar-collapse -->
-    </div><!-- /.container-fluid -->
+             <li class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" >Preferencias<span class="caret"></span></a>
+                <ul class="dropdown-menu">
+                    <li><a href="#">Buscar Transporte</a></li>
+                    <li><a href="#">Choferes preferidos</a></li>
+                    <li><a href="#">Rutas preferidas</a></li>
+                </ul>
+            </li>
+            <li class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" >Acerca del proyecto <span class="caret"></span></a>
+                <ul class="dropdown-menu">
+                    <li><a href="#">Servicios que brindamos</a></li>
+                    <li><a href="Referente.jsp">Referente Institucional</a></li>
+                    <li><a href="Somos.jsp">Quienes somos</a></li>
+                    <li><a href="contact.jsp">Contactenos</a></li>
+                </ul>
+            </li>
+            <li id="linkDriver" style="display: none;"><a href="Choferes.jsp">Chofer</a></li>
+            <li id="linkAdmin" style="display: none;"><a href="Administrador.jsp">Administrador</a></li> 
+            <li class="dropdown">
+                <a id="linkUser" href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true">User <span class="caret"></span></a>
+                <ul class="dropdown-menu">
+                    <li><a href="user.jsp">perfil</a></li>
+                    <li><a href="#">viajes realizados</a></li>
+                    <li class="divider"></li>
+                    <li><a href="#" id="logout">salir</a></li>
+                </ul>
+            </li>
+        </ul>
+    </div><!-- /.navbar-collapse -->
+</div><!-- /.container-fluid -->
 </nav>
 <script src="scripts/loads/navs/loadUserNav.js" type="text/javascript"></script>
