@@ -2,8 +2,20 @@
     .icon-bar{
         background-color: white;
     }
+    .myNav{
+        background-color: #e3f2fd;
+        position: absolute;
+        z-index:5;
+        left:0;
+        right:0;
+    }
+    #estado{
+        padding-top: 0px;
+        padding-bottom: 0px;
+
+    }
 </style>
-<nav class="navbar navbar-light text-center" style="background-color: #e3f2fd;">
+<nav class="navbar navbar-light text-center myNav">
     <div class="container-fluid">
         <!-- Brand and toggle get grouped for better mobile display -->
         <div class="navbar-header">
@@ -13,13 +25,19 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="index.jsp">TaxiWeb</a>
+            <a class="navbar-brand" href="index.jsp">TransportesWeb</a>
         </div>
 
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav">
-                <li><a href="#">Estado</a></li> 
+            <li id="mapItem"><a href="driverMap.jsp" id="driverMapLink">Mapa</a></li> 
+                <li id="estadoItem">
+                    <a href="#" id="estado" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                        <img src="pictures/off.png" width="50" id="offPic" title="Estado">
+                        <img src="pictures/on.png" width="50" id="onPic" title="Estado">
+                    </a>
+                </li>
                 <li class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" >Graficas<span class="caret"></span></a>
                     <ul class="dropdown-menu">

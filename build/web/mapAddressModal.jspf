@@ -38,6 +38,7 @@
 </div>
 
 <script>
+var KEY = "AIzaSyDaIEcmIwAPUOKUovNvpdViNuv5C2dokjY";
 var map;
 var center;
 var marker;
@@ -72,7 +73,7 @@ var marker;
 
                  model.point = {LatLng:{lat,lng},
                         query:"https://maps.googleapis.com/maps/api/geocode/json?latlng="+lat+","+lng+
-                              "&key=AIzaSyCjuNx2S9O9IDC7lZZjIFWrFPXh8SmdPyQ"
+                              "&key="+KEY
                                 }//agregando los datos de la direccion al modelo
             } else {
                 alert('Geocode was not successful for the following reason: ' + status);
@@ -116,7 +117,7 @@ var marker;
 
         model.point = {LatLng:place,
             query:"https://maps.googleapis.com/maps/api/geocode/json?latlng="+lat+","+lng+
-            "&key=AIzaSyCjuNx2S9O9IDC7lZZjIFWrFPXh8SmdPyQ"
+            "&key="+KEY
         }//agregando los datos de la direccion al modelo
     }
     
@@ -128,7 +129,7 @@ var marker;
 
         model.point = {LatLng:{lat, lng},
             query:"https://maps.googleapis.com/maps/api/geocode/json?latlng="+lat+","+lng+
-            "&key=AIzaSyCjuNx2S9O9IDC7lZZjIFWrFPXh8SmdPyQ"
+            "&key="+KEY
         }//agregando los datos de la direccion al modelo
     }
 

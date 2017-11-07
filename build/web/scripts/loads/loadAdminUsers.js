@@ -12,7 +12,7 @@ view ={
             html += "<td>"+(count++)+"</td>";
             html += "<td>"+data[usuarios].idUsuario+"</td>";
             html += "<td>"+data[usuarios].nombre+" "+data[usuarios].apellidos+"</td>";
-            html += "<td>"+data[usuarios].fechaNacimiento+"</td>";
+            html += "<td>"+data[usuarios].getFechaNacimiento()+"</td>";
             html += "<td>"+data[usuarios].telefono+"</td>";
             html += "<td>"+data[usuarios].correo+"</td>";
             html += "<td>"+data[usuarios].direccion.nombre+"</td>";
@@ -56,35 +56,36 @@ view ={
         html +='</ul>';
         $("#buttonsPagination").html(html);
     },
-    cargarDataUserModal: function(data){
+    cargarDataUserModal: function(user){
         $("#alias").prop("readonly", true);
-        $("#alias").val(data.idUsuario);
-        $("#name").val(data.nombre);
-        $("#lastName").val(data.apellidos);
-        $("#date").val(data.fechaNacimiento);
-        $("#address").val('{"lat":'+data.direccion.lat+', "lng": '+data.direccion.lat+"}\n"+ data.direccion.nombre);
-        $("#phone").val(data.telefono);
-        $("#email").val(data.correo);
-        $("#isAdmin").prop("checked",data.esAdministrador);
+        $("#alias").val(user.idUsuario);
+        $("#name").val(user.nombre);
+        $("#lastName").val(user.apellidos);
+        $("#date").val(user.getFechaNacimiento());
+        $("#address").val(user.direccion.nombre);
+        $("#phone").val(user.telefono);
+        $("#email").val(user.correo);
+        $("#isAdmin").prop("checked",user.esAdministrador);
 
         $("#divEstado").css('display',"block");
         $("#password").css('display', "none");
         $("#password").val("undefined");
 
         $("#dataUserModal").modal("show");
+        model.user = user;
     },
     setDataAddressForm: function(data,model){
-        var address = JSON.stringify(model.point.LatLng)+"\n"
-        + data.results[1].formatted_address+"\n";
+        model.point.name = data.results[1].formatted_address;
+        var address = model.point.name;
 
         $("#address").val(address);
-        model.point=undefined;
     }
 }
 
 
 $(document).ready(function(){
     $("#date").datepicker({dateFormat: "dd/mm/yy"});
+    $("#btnRegister").html("Registrar");
 
     adminController = new AdminController(view);
     userController = new UserController(view);
@@ -153,24 +154,27 @@ $(document).ready(function(){
 
 function doValidation(event) {
     event.preventDefault();
-    var user = new User();
-    user.idUsuario = $("#alias").val();
-    user.nombre = $("#name").val();
-    user.apellidos = $("#lastName").val();
-    user.fechaNacimiento = $("#date").val();
-    user.telefono = $("#phone").val();
-    user.correo = $("#email").val();
-    user.password = $("#password").val();
-    user.esAdministrador = $("#isAdmin").prop("checked");
+    if($("#address").val()==""){
+        return swal('Oops...','falta la direccion!','error')
+    }
 
-    var arr = $("#address").val().split("\n");
-    console.log(arr);//[{lat,lng},name]
-    var latLng = JSON.parse(arr[0]);    
-    user.direccion = new Address(latLng.lat,latLng.lng,arr[1],14);
+    
+    var user = new User(
+        $("#alias").val(),
+        $("#name").val(),
+        ((model.point)?new Address(model.point.LatLng.lat,model.point.LatLng.lat,$("#address").val(),14):model.user.direccion),
+        $("#lastName").val(),
+        $("#date").val(),
+        $("#phone").val(),
+        $("#email").val(),
+        $("#password").val(),
+        $("#isAdmin").prop("checked")
+        );
 
-    console.log(user);
+    //console.log(user);
     if($("#alias").prop("readonly")){
         adminController.editUsuario(user,$("#dataUserModal"));
+        model.point = undefined;
     }else{
         swal({
             title: 'Enter your password',
@@ -184,6 +188,7 @@ function doValidation(event) {
         }).then(function (password) {
             if (password == user.password) {
                 userController.registerClient(user);
+                model.point = undefined;
             }else
             swal('Oops...','No coinside!','error')
 

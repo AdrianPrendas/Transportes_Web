@@ -15,19 +15,12 @@ function areYouSure(f,id, msg){
 
 function loading(){
   swal({
-          title: 'Cargando...',
-          text: 'por favor espere!',
-          onOpen: function () {
-              swal.showLoading()
-          }
-      }).then(function () {},
-              // handling the promise rejection
-                  function (dismiss) {
-                      if (dismiss === 'timer') {
-                         console.log('I was closed by the timer')
-                      }
-                  }
-      );
+    title: 'Cargando...',
+    text: 'por favor espere!',
+    onOpen: function () {
+      swal.showLoading()
+    }
+  })
 }
 
 function AdminController(view) {
@@ -42,11 +35,27 @@ AdminController.prototype = {
     Proxy.saveUsuario(user);
   },
   getUsuarios: function(){//R
-      loading();
-      Proxy.getUsuarios(this.view.cargarTabla); 
+    loading();
+    Proxy.getUsuarios(function(data){
+      model.dataOfUsuarios = data;
+      this.view.cargarTabla(data);
+        swal.close();//close loading
+      });
   },
   editUsuario: function(user,modal){//U
-    Proxy.editUsuario(user,modal);
+    Proxy.editUsuario(user,function(successMsg){
+      modal.modal("hide");
+      swal({
+        type: 'success',
+        title: successMsg,
+        showConfirmButton: false,
+        timer: 5000
+      }).then(function(){},//reject
+        function(){//resolve
+          location.reload();
+        }
+      )
+    });
   },
   deleteUsuarioId: function(id){//D
     areYouSure(Proxy.deleteUsuarioId,id, "no vas a poder revertir los cambios despues de esto, tabien se eliminaran los viajes del usuario!!!");
@@ -60,27 +69,59 @@ AdminController.prototype = {
   },
   getConductores: function(){//R
     loading();
-    Proxy.getConductores(this.view.cargarTabla);
+    Proxy.getConductores(function(data){
+      model.dataOfConductores = data;
+      this.view.cargarTabla(data);
+      swal.close();//close loading
+    });
   },
   editConductor: function(driver,modal){//U
-    Proxy.editConductor(driver,modal); 
+    Proxy.editConductor(driver,function(successMsg){
+      modal.modal("hide");
+      swal({
+        type: 'success',
+        title: successMsg,
+        showConfirmButton: false,
+        timer: 5000
+      }).then(function(){},//reject
+        function(){//resolve
+          location.reload();
+        }
+      )
+    });
   },
   deleteConductorId: function(id){//D
     areYouSure(Proxy.deleteConductorId,id, "no vas a poder revertir los cambios despues de esto!");
   },
   getConductorId: function(id){//Read one
    Proxy.getConductorId(id,this.view.cargarDataDriverModal);
-  },
+ },
   //Vehiculos
   saveVehiculo: function(car, modal){//C
     Proxy.saveVehiculo(car,modal);
   },
   getVehiculos: function(){//R
     loading();
-  	Proxy.getVehiculos(this.view.cargarTabla);	
+    Proxy.getVehiculos(function(data){
+      model.dataOfVehiculos = data;
+      this.view.cargarTabla(data);
+      swal.close();//close loading
+    });
   },
   editVehiculo: function(car, modal){//U
-    Proxy.editVehiculo(car,modal);
+    Proxy.editVehiculo(car,function(successMsg){
+      modal.modal("hide");
+      swal({
+        type: 'success',
+        title: successMsg,
+        showConfirmButton: false,
+        timer: 5000
+      }).then(function(){},//reject
+        function(){//resolve
+          location.reload();
+        }
+      )
+    });
   },
   deleteVehiculoId: function(id){//D
     areYouSure(Proxy.deleteVehiculoId,id, "no vas a poder revertir los cambios despues de esto!");      

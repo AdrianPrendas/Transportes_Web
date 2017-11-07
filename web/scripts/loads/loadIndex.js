@@ -67,17 +67,22 @@ $(document).ready(function () {
 
 function doValidation(event) {
     event.preventDefault();
-    var user = new User();
-    user.idUsuario = $("#alias").val();
-    user.nombre = $("#name").val();
-    user.apellidos = $("#lastName").val();
-    user.fechaNacimiento = $("#date").val();
-    user.telefono = $("#phone").val();
-    user.correo = $("#email").val();
-    user.password = $("#password").val();
-    user.esAdministrador = false;
+    if($("#address").val()==""){
+        return swal('Oops...','falta la direccion!','error')
+    }
 
-    user.direccion = new Address(model.point.LatLng.lat, model.point.LatLng.lng, $("#address").val(), 14);
+
+    var user = new User(
+        $("#alias").val(),
+        $("#name").val(),
+        new Address(model.point.LatLng.lat, model.point.LatLng.lng, $("#address").val(), 14),
+        $("#lastName").val(),
+        $("#date").val(),
+        $("#phone").val(),
+        $("#email").val(),
+        $("#password").val(),
+        false
+        );
 
     swal({
         title: 'Enter your password',

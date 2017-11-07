@@ -10,7 +10,7 @@
         } else {
         tipoUsuario = (String)sesion.getAttribute("tipo"); 
         if(!tipoUsuario.endsWith("user"))
-        response.sendRedirect("index.jsp");
+            response.sendRedirect("index.jsp");
         }
     } else {
         response.sendRedirect("index.jsp");
@@ -20,6 +20,7 @@
 <html>
     <head>
         <%@ include file="imports.jspf" %> 
+        <script type="text/javascript" src="scripts/userMap.js"></script>
         <script src="scripts/loads/loadUserMap.js" type="text/javascript"></script>
     </head>
     <body style="height: 100%;">

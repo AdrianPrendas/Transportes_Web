@@ -23,7 +23,7 @@
 					<div class="row">
 						<div class="col-lg-6 col-lg-offset-3">
 							<div class="form-group">
-								<input type="text" class="form-control" placeholder="Ano 1960 en adelante" id="anno" maxlength="4" required>
+								<input type="text" class="form-control" placeholder="Ano" id="anno" maxlength="4" pattern="[1-9]\d{3}" title="4 cifras" required>
 							</div>
 						</div>
 					</div>

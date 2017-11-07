@@ -9,6 +9,8 @@ import cr.ac.una.prograiv.taxi.bl.UsuarioBL;
 import cr.ac.una.prograiv.taxi.domain.*;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -47,7 +49,7 @@ public class UsuarioServlet extends HttpServlet {
                     .registerSubtype(Vehiculo.class, "Vehiculo")
                     .registerSubtype(Viaje.class, "Viaje");
             
-            Gson gson = new GsonBuilder().registerTypeAdapterFactory(rta).setDateFormat("dd/mm/yyyy").create();
+            Gson gson = new GsonBuilder().registerTypeAdapterFactory(rta).setDateFormat("dd/MM/yyyy").create();
             
             BaseBL bbl = new BaseBL();
             UsuarioBL ubl = new UsuarioBL();
@@ -103,9 +105,9 @@ System.out.println("se almaceno el cliente correctamente");
 System.out.println(json);                    
                     out.write(json);
                     break;
-                case "getUsuarios":
+                case "getUsuarios":             
                      try{
-                        json = gson.toJson(bbl.getDao(Usuario.class.getName()).findAll());
+                        json = gson.toJson((bbl.getDao(Usuario.class.getName()).findAll()));
                     }catch(Exception e){
                         e.printStackTrace();
                         json = gson.toJson(new Exception("Error en el servidor: no se encontraron Usuarios"));
@@ -154,7 +156,7 @@ System.out.println(json);
                         json = gson.toJson(new Exception("Se elimino el Usuario con exito"));
                     }catch(Exception e){
                         e.printStackTrace();
-                        json = gson.toJson(new Exception("Error hay un Conductor relacionado ID:" + request.getParameter("id")+" Intente Eliminarlo primero"));
+                        json = gson.toJson(new Exception("Error hay un Chofer relacionado {ID: " + request.getParameter("id")+"} Intente Eliminarlo primero"));
                     }
 System.out.println(json);
                     out.print(json);

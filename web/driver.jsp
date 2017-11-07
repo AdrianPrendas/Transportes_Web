@@ -26,6 +26,7 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Driver</title>
         <%@ include file="imports.jspf" %>
+        <script src="scripts/loads/loadDriver.js" type="text/javascript"></script>
     </head>
     <body>
         <header>

@@ -15,7 +15,7 @@ view ={
             html += "<td>"+data[conductor].usuario.correo+"</td>";
             html += "<td>"+data[conductor].usuario.telefono+"</td>";
             html += "<td>"+data[conductor].tipoLicencia+"</td>";
-            html += "<td>"+data[conductor].licenciaVence+"</td>";
+            html += "<td>"+data[conductor].getLicenciaVence()+"</td>";
             html += "<td>"+data[conductor].vehiculo.placa+"</td>";
             html += "<td>"+data[conductor].vehiculo.ano+"</td>";
             html += "<td>"+data[conductor].vehiculo.modelo+"</td>";
@@ -69,7 +69,7 @@ view ={
         $("#cedula").val(driver.cedula);
         $("#name_last_final").val(driver.usuario.nombre+" "+driver.usuario.apellidos);
         $("#tipoLicencia").val(driver.tipoLicencia);
-        $("#fechaLicVence").val(driver.licenciaVence);
+        $("#fechaLicVence").val(driver.getLicenciaVence());
 
         $("#vehiculoAnno").val(driver.vehiculo.ano);
         $("#vehiculoModelo").val(driver.vehiculo.modelo);

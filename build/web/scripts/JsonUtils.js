@@ -1,10 +1,12 @@
 var JsonUtils = JsonUtils || {};
 
-JsonUtils.revive = function (k, v) {            
+JsonUtils.revive = function (k, v) { 
+    if (k instanceof Object)v=k;
+
     if (v instanceof Object && v._class == 'Usuario')
-        return new User(v.idUsuario, v.nombre, this.revive(0,v.direccion), v.apellidos, v.fechaNacimiento, v.telefono, v.correo, v.password, v.esAdministrador);
+        return new User(v.idUsuario, v.nombre, JsonUtils.revive(0,v.direccion), v.apellidos, v.fechaNacimiento, v.telefono, v.correo, v.password, v.esAdministrador);    
     if (v instanceof Object && v._class == 'Conductor')
-	return new Driver(v.usuarioIdUsuario, this.revive(0,v.usuario), this.revive(0,v.vehiculo), v.tipoLicencia, v.licenciaVence, v.puntuacion, v.cedula);        
+	return new Driver(v.usuarioIdUsuario, JsonUtils.revive(0,v.usuario), JsonUtils.revive(0,v.vehiculo), v.tipoLicencia, v.licenciaVence, v.puntuacion, v.cedula);        
     if (v instanceof Object && v._class == 'Vehiculo')
         return new Car(v.placa, v.ano, v.modelo,v.marca, v.color, v.estado);
     if (v instanceof Object && v._class == 'Viaje')

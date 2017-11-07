@@ -13,8 +13,22 @@ UserController.prototype = {
     editUsuario: function(user,modal){//U
         Proxy.editUsuario(user,modal);
     },
-    login: function (userName, password) {
-        Proxy.login(userName, password, this.storeUser,this.loadUser);
+    login: function (userName, password,callBack) {
+        Proxy.login(userName, password,function(user){
+            swal({
+                position: 'center',
+                type: 'success',
+                title: 'Encontrado!!!',
+                showConfirmButton: false,
+                timer: 2500
+            }).then(function(){},
+                function (dismiss) {
+                    if (dismiss === 'timer') {
+                        userController.storeUser(user);
+                        userController.loadUser();    
+                    }
+            })
+        }) 
     },
     storeUser: function (user) {
         //sotrage*******************************************
@@ -47,6 +61,18 @@ UserController.prototype = {
         }
 
     },
+    getUser: function(){
+        var storage = {};
+        //sotrage*******************************************
+        storage = Storage.retrieve("user");
+        if (storage == null) {
+            storage = {};
+            Storage.store("user", storage);
+            window.location.href = "index.jsp";
+        }else
+            return storage.user;
+        //sotrage*******************************************
+    },
     logOut: function () {
         var storage;
         //sotrage*******************************************
@@ -67,12 +93,12 @@ UserController.prototype = {
                 swal.showLoading()
             }
         }).then(function () {},
-                // handling the promise rejection
-                        function (dismiss) {
-                            if (dismiss === 'timer') {
-                                window.location.href = "Logout";
-                            }
-                        }
-                )
+            // handling the promise rejection
+            function (dismiss) {
+                if (dismiss === 'timer') {
+                    window.location.href = "Logout";
+                }
             }
+        )
+    }
 };

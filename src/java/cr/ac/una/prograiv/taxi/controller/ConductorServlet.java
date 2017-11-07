@@ -42,7 +42,7 @@ public class ConductorServlet extends HttpServlet {
                     .registerSubtype(Vehiculo.class, "Vehiculo")
                     .registerSubtype(Viaje.class, "Viaje");
 
-            Gson gson = new GsonBuilder().registerTypeAdapterFactory(rta).setDateFormat("dd/mm/yyyy").create();
+            Gson gson = new GsonBuilder().registerTypeAdapterFactory(rta).setDateFormat("dd/MM/yyyy").create();
             String json;
 
             ConductorBL cBL = new ConductorBL();

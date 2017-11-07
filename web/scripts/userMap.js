@@ -1,9 +1,10 @@
-
+var PRECIO = 300;
 
 function initMap() {
     var markers = {};
     var markerUbicacion = new google.maps.Marker();
     var markerdestino = new google.maps.Marker();
+    var distanceMatrixService = new google.maps.DistanceMatrixService();
     var directionsService = new google.maps.DirectionsService;
     var directionsDisplay = new google.maps.DirectionsRenderer;
     var geocoder = new google.maps.Geocoder();
@@ -33,23 +34,24 @@ function initMap() {
           if (status === 'OK') {
             map.setCenter(results[0].geometry.location);
 
-        if(ubicacion == "start"){
-            markerUbicacion = new google.maps.Marker({
-                map: map,
-                position: results[0].geometry.location
-            });
-            markerUbicacion.setPosition(location);
-            markers['ubicacion'] = markerUbicacion;
-        }else if(ubicacion == "end"){
-            markerdestino = new google.maps.Marker({
-                map: map,
-                position: results[0].geometry.location
-            });
-            markerdestino.setPosition(location);
-            markers['destino'] = markerdestino;
-        }
+            if(ubicacion == "start"){
+                markerUbicacion.setMap(null);
+                markerUbicacion = new google.maps.Marker({
+                    map: map,
+                    position: results[0].geometry.location
+                });
+                markerUbicacion.setPosition(location);
+                markers['ubicacion'] = markerUbicacion;
+            }else if(ubicacion == "end"){
+                markerdestino = new google.maps.Marker({
+                    map: map,
+                    position: results[0].geometry.location
+                });
+                markerdestino.setPosition(location);
+                markers['destino'] = markerdestino;
+            }
 
-        genRoute();
+            genRoute();
 
         } else {
             alert('Geocode was not successful for the following reason: ' + status);
@@ -95,6 +97,8 @@ function initMap() {
         markerUbicacion.setPosition(place);
         markerUbicacion.setMap(map);
         markers['ubicacion'] = markerUbicacion;
+
+        genRoute();
     }
     
     function addMarker(location) {
@@ -124,6 +128,9 @@ function initMap() {
                     noMostrarMarkers();
                     directionsDisplay.setMap(map);//vamos a trazar una ruta
                     directionsDisplay.setDirections(response);
+                    setTimeout(function(){
+                        timeAndDistance(u,d);    
+                    },2000);
                 } else {
                     window.alert('Directions request failed due to ' + status);
                 }
@@ -162,33 +169,71 @@ function initMap() {
         });
     }
 
+    function timeAndDistance(ubication, destination){
+        distanceMatrixService.getDistanceMatrix(
+        {
+            origins: [ubication],
+            destinations: [destination],
+            travelMode: 'DRIVING',
+        }, function(response, status){
+            console.log(status);
+            console.log(response);
+            var distance = response.rows[0].elements[0].distance.text.split(" "); //["1,1", "km"]
+            distance = distance[0].replace(",","."); // cambiando , por . para que no haya problemas
+            console.log(distance);
+            var str = "Origen: " + response.originAddresses[0] +"<br>"
+                    + "Destino: " + response.destinationAddresses[0] +"<br>"
+                    + "Distancia: "+ response.rows[0].elements[0].distance.text +"<br>"
+                    + "Duracion: " + response.rows[0].elements[0].duration.text +"<br>"
+                    + "Precio estimado: ₡" + (distance * PRECIO);
+            swal({
+                title: 'Quieres pedir un viaje?',
+              html:"<p>"+ str + "</p>",
+              type: 'question',
+              showCancelButton: true,
+              confirmButtonColor: '#3085d6',
+              cancelButtonColor: '#d33',
+              confirmButtonText: 'Si, pedir!'
+          }).then(function () {
+              swal(
+                'Deleted!',
+                'Your file has been deleted.',
+                'success'
+                )
+          })
+      });
+    }
+
     function swalOrigenDestino(ubicacion,title){
         swal({
-              title: title,
-              input: 'text',
-              confirmButtonText: 'Buscar',
-              showLoaderOnConfirm: true,
-              preConfirm: function (address) {
-                return new Promise(function (resolve, reject) {
-                  setTimeout(function() {
-                    if (address === '') {
-                      reject('Introduce alguna Ubicacion.')
-                  } else {
-                      geocodeAddress(address,ubicacion);
-                          resolve();
-                  }
-            }, 2000)
-            })
-            },
-        }).then(function (ubicacion) {
-            swal({
-                type: 'success',
-                title: 'Encontrado!!!',
-                showConfirmButton: false,
-                timer: 1500
-            })
+          title: title,
+          input: 'text',
+          confirmButtonText: 'Buscar',
+          showLoaderOnConfirm: true,
+          preConfirm: function (address) {
+            return new Promise(function (resolve, reject) {
+              setTimeout(function() {
+                if (address === '') {
+                  reject('Introduce alguna Ubicacion.')
+              } else {
+                if(!address.toLowerCase().includes("costa rica"))
+                            address += " costa rica";//incluyendole costa rica para facilitar la busqueda
+
+                        geocodeAddress(address,ubicacion);
+                        resolve();
+                    }
+                }, 2000)
+          })
+        },
+    }).then(function (ubicacion) {
+        swal({
+            type: 'success',
+            title: 'Encontrado!!!',
+            showConfirmButton: false,
+            timer: 1500
         })
-    }
+    })
+}
 }
 
 

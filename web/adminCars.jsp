@@ -35,9 +35,9 @@ response.sendRedirect("index.jsp");
     </header>
     <div class="container-fluid text-center">
         <div class="col-lg-12">    
-            <h1>Administración de Vehiculos</h1>
+            <h1>Administración de Vehículos</h1>
             <hr>
-            <button class="btn btn-danger" id="newCar">Nuevo Vehiculo</button>
+            <button class="btn btn-danger" id="newCar">Nuevo Vehículo</button>
             <hr>
         </div>
         <div class="col-sm-12 col-lg-12" style="overflow-x:auto;">
@@ -52,7 +52,7 @@ response.sendRedirect("index.jsp");
                             <td>Modelo</td>
                             <td>Color</td>
                             <td>Estado</td>
-                            <td>Accion</td>
+                            <td>Acción</td>
                         </tr>
                     </thead>
                     <tbody id="tablaVehiculos"></tbody>

@@ -11,7 +11,6 @@
 
 
 <!--own imports-->
-<script type="text/javascript" src="scripts/map.js"></script>
 <link rel="stylesheet" title="Basico" type="text/css" href="styles/map.css">
 <link rel="stylesheet" type="text/css" href="styles/style.css">
 

@@ -24,7 +24,7 @@ response.sendRedirect("index.jsp");
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <title>Administracion</title>
+    <title>Administración</title>
     <%@ include file="imports.jspf" %> 
     <script src="scripts/controllers/adminController.js" type="text/javascript"></script>
     <script src="scripts/controllers/userController.js" type="text/javascript"></script>
@@ -36,7 +36,7 @@ response.sendRedirect("index.jsp");
     </header>
     <div class="container-fluid text-center">
         <div class="col-lg-12"> 
-            <h1>Administracion de Usuarios</h1>
+            <h1>Administración de Usuarios</h1>
             <hr>
             <button class="btn btn-danger" id="newUser">Nuevo Usuario</button>
             <hr>
@@ -47,14 +47,14 @@ response.sendRedirect("index.jsp");
                     <thead bgcolor="lime">
                         <tr>
                             <td>#</td>
-                            <td>User name</td>
-                            <td>Nombre</td>
-                            <td>fecha de nacimiento</td>
+                            <td>Nombre de usuario</td>
+                            <td>Nombre y apellidos</td>
+                            <td>Fecha de nacimiento</td>
                             <td>Telefono</td>
                             <td>Correo</td>
-                            <td>Direccion</td>
+                            <td>Dirección</td>
                             <td>Es administrador</td>
-                            <td>Accion</td>
+                            <td>Acción</td>
                         </tr>
                     </thead>
                     <tbody id="tablaUsuarios">

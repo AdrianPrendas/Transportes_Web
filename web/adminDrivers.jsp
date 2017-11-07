@@ -45,20 +45,20 @@ response.sendRedirect("index.jsp");
                     <thead bgcolor="lime">
                         <tr>
                             <th>#</th>
-                            <th>User name</th>
-                            <th>Cedula</th>
-                            <th>Nombre</th>
+                            <th>Nombre de usuario</th>
+                            <th>Cédula</th>
+                            <th>Nombre y apellidos</th>
                             <th>Correo</th>
                             <th>Telefono</th>
-                            <th>Tipo Licencia</th>
+                            <th>Licencia</th>
                             <th>Licencia Vence</th>
-                            <th>Vehiculo placa</th>
+                            <th>Vehículo placa</th>
                             <th>Año</th>
                             <th>Model</th>
                             <th>Marca</th>
                             <th>Color</th>
                             <th>Estado</th>
-                            <th>Accion</th>
+                            <th>Acción</th>
                         </tr>
                     </thead>
                     <tbody id="tablaConductores"></tbody>

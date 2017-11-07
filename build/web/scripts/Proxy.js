@@ -1,6 +1,6 @@
 var Proxy = Proxy || {};
 
-Proxy.login = function (userName, password, storeUser, loadUser) {
+Proxy.login = function (userName, password, callBack) {
     $.ajax({
         url: "/Transportes_Web/UserServices",
         type: "POST",
@@ -11,21 +11,9 @@ Proxy.login = function (userName, password, storeUser, loadUser) {
             password: password
         }
     }).done(function (result) {
-        var object = JsonUtils.revive(0, result);
+        var object = JsonUtils.revive(result);
         if (object instanceof User || object instanceof Driver){
-            swal({
-                position: 'center',
-                type: 'success',
-                title: 'Encontrado!!!',
-                showConfirmButton: false,
-                timer: 2500
-            }).then(function(){},
-            function (dismiss) {
-                if (dismiss === 'timer') {
-                    storeUser(object)
-                    loadUser();    
-                }
-            })
+          callBack(object);
         }else
             swal('Oops...',result.detailMessage,'error')        
     }).fail(function (e, msg, excepn) {
@@ -46,8 +34,16 @@ Proxy.saveUsuario = function(user){
         if(err=='E')//error
             swal('Oops...',result.detailMessage,'error')
         else{
-            swal({type: 'success',title: result.detailMessage,showConfirmButton: false,timer: 5000})
-            setTimeout(function(){location.reload();},6000);//refrescar la pagina
+            swal({
+                type: 'success',
+                title: result.detailMessage,
+                showConfirmButton: false,
+                timer: 5000
+            }).then(function(){},//reject
+                function(){//resolv
+                    location.reload();
+                }
+            )
         }
     }).fail(function (e, msg, excepn) {
         alert('**** AJAX ERROR ' + msg + ' ****');
@@ -68,15 +64,22 @@ Proxy.saveVehiculo = function(car, modal){
             swal('Oops...',result.detailMessage,'error')
         else{
             modal.modal("hide");
-            swal({type: 'success',title: result.detailMessage,showConfirmButton: false,timer: 5000})
-            setTimeout(function(){location.reload();},6000);//refrescar la pagina
+            swal({
+                type: 'success',
+                title: result.detailMessage,
+                showConfirmButton: false,
+                timer: 5000
+            }).then(function(){},//reject
+                function(){//resolv
+                    location.reload();
+                }
+            )
         }
     }).fail(function (e, msg, excepn) {
         swal('**** AJAX ERROR ',msg,'error')
     });
 };
 Proxy.saveConductor = function(driver, modal){
-    console.log(driver);
     $.ajax({
         url: "/Transportes_Web/DriverServices",
         type: "POST",
@@ -91,8 +94,16 @@ Proxy.saveConductor = function(driver, modal){
             swal('Oops...',result.detailMessage,'error')
         else{
             modal.modal("hide");
-            swal({type: 'success',title: result.detailMessage,showConfirmButton: false,timer: 5000})
-            setTimeout(function(){location.reload();},6000);//refrescar la pagina
+            swal({
+                type: 'success',
+                title: result.detailMessage,
+                showConfirmButton: false,
+                timer: 5000
+            }).then(function(){},//reject
+                function(){//resolv
+                    location.reload();
+                }
+            )
         }
     }).fail(function (e, msg, excepn) {
         swal('**** AJAX ERROR ',msg,'error')
@@ -107,14 +118,12 @@ Proxy.getUsuarios = function(callBack){
             action: "getUsuarios"
         }
     }).done(function (result) {
-        var arr = JsonUtils.revive(0, result);
-        if (arr instanceof Array){
-            model.dataOfUsuarios = arr;
+        if (result instanceof Array){
+            var arr = result.map(JsonUtils.revive);
             callBack(arr);
         }
         else
             swal('Oops...',result.detailMessage,'error')
-        swal.close();
     }).fail(function (e, msg, excepn) {
         swal('**** AJAX ERROR ',msg,'error')
     });
@@ -129,13 +138,12 @@ Proxy.getVehiculos = function(callBack){
         }
     }).done(function (result) {
         var arr = JsonUtils.revive(0, result);
-        if (arr instanceof Array){
-            model.dataOfVehiculos = arr;
+        if (result instanceof Array){
+            var arr = result.map(JsonUtils.revive);
             callBack(arr);
         }
         else
             swal('Oops...',result.detailMessage,'error')
-        swal.close();
     }).fail(function (e, msg, excepn) {
         swal('**** AJAX ERROR ',msg,'error')
     });
@@ -149,23 +157,18 @@ Proxy.getConductores = function (callBack){
             action: "getConductores"
         }
     }).done(function (result) {
-        var arr = JsonUtils.revive(0, result);
-        if (arr instanceof Array && arr.length!=0){
-            model.dataOfConductores = arr;
-            callBack(arr);//callback = this.view.ocultarFormLogin();
+        if (result instanceof Array){
+            var arr = result.map(JsonUtils.revive);
+            callBack(arr);
         }
         else{
-            if (arr instanceof Array && arr.length==0)
-                swal('Oops...',"no hay Conductores para mostrar",'error')
-            else    
-                swal('Oops...',result.detailMessage,'error')
+            swal('Oops...',result.detailMessage,'error')
         }
-        swal.close();
     }).fail(function (e, msg, excepn) {
         swal('**** AJAX ERROR ',msg,'error')
     });
 };
-Proxy.editUsuario = function (car,modal){
+Proxy.editUsuario = function (car,callBack){
     $.ajax({
         url: "/Transportes_Web/UserServices",
         type: "POST",
@@ -178,16 +181,13 @@ Proxy.editUsuario = function (car,modal){
         var err = result.detailMessage[0];
         if(err=='E')//error
             swal('Oops...',result.detailMessage,'error')
-        else{
-            modal.modal("hide");
-            swal({type: 'success',title: result.detailMessage,showConfirmButton: false,timer: 5000})
-            setTimeout(function(){location.reload();},6000);//refrescar la pagina
-        }
+        else
+            callBack(result.detailMessage);
     }).fail(function (e, msg, excepn) {
         swal('**** AJAX ERROR ',msg,'error')
     });
 };
-Proxy.editVehiculo = function (car,modal){
+Proxy.editVehiculo = function (car,callBack){
     $.ajax({
         url: "/Transportes_Web/CarServices",
         type: "POST",
@@ -201,95 +201,113 @@ Proxy.editVehiculo = function (car,modal){
         if(err=='E')//error
             swal('Oops...',result.detailMessage,'error')
         else{
-            modal.modal("hide");
-            swal({type: 'success',title: result.detailMessage,showConfirmButton: false,timer: 5000})
-            setTimeout(function(){location.reload();},6000);//refrescar la pagina
+            callBack(result.detailMessage);
         }
     }).fail(function (e, msg, excepn) {
         swal('**** AJAX ERROR ',msg,'error')
     });
 };
-Proxy.editConductor = function(driver,modal){
-  $.ajax({
-    url: "/Transportes_Web/DriverServices",
-    type: "POST",
-    dataType: "json",
-    data: {
-        action: "editConductor",
-        driver:JSON.stringify(driver, JsonUtils.repalcer)
-    }
-}).done(function (result) {
-    var err = result.detailMessage[0];
+Proxy.editConductor = function(driver,callBack){
+    $.ajax({
+        url: "/Transportes_Web/DriverServices",
+        type: "POST",
+        dataType: "json",
+        data: {
+            action: "editConductor",
+            driver:JSON.stringify(driver, JsonUtils.repalcer)
+        }
+    }).done(function (result) {
+        var err = result.detailMessage[0];
         if(err=='E')//error
             swal('Oops...',result.detailMessage,'error')
-        else{
-            modal.modal("hide");
-            swal({type: 'success',title: result.detailMessage,showConfirmButton: false,timer: 5000})
-            setTimeout(function(){location.reload();},6000);//refrescar la pagina
-        }
+        else
+            callBack(result.detailMessage);
     }).fail(function (e, msg, excepn) {
         swal('**** AJAX ERROR ',msg,'error')
     });
 },
 Proxy.deleteUsuarioId = function(id){
- $.ajax({
-    url: "/Transportes_Web/UserServices",
-    type: "GET",
-    dataType: "json",
-    data: {
-        action: "deleteUsuarioId",
-        id:id
-    }
-}).done(function (result) {
-    console.log(result)
-    var err = result.detailMessage[0];
+    $.ajax({
+        url: "/Transportes_Web/UserServices",
+        type: "GET",
+        dataType: "json",
+        data: {
+            action: "deleteUsuarioId",
+            id:id
+        }
+    }).done(function (result) {
+        var err = result.detailMessage[0];
         if(err=='E')//error
             swal('Oops...',result.detailMessage,'error')
         else{
-            swal({type: 'success',title: result.detailMessage,showConfirmButton: false,timer: 5000})
-            setTimeout(function(){location.reload();},6000);//refrescar la pagina
+            swal({
+                type: 'success',
+                title: result.detailMessage,
+                showConfirmButton: false,
+                timer: 5000
+            }).then(function(){},//reject
+                function(){//resolv
+                    location.reload();
+                }
+            )
         }
     }).fail(function (e, msg, excepn) {
         swal('**** AJAX ERROR ',msg,'error')
     });
 };
 Proxy.deleteVehiculoId = function(id){
- $.ajax({
-    url: "/Transportes_Web/CarServices",
-    type: "GET",
-    dataType: "json",
-    data: {
-        action: "deleteVehiculoId",
-        id:id
-    }
-}).done(function (result) {
-    var err = result.detailMessage[0];
+    $.ajax({
+        url: "/Transportes_Web/CarServices",
+        type: "GET",
+        dataType: "json",
+        data: {
+            action: "deleteVehiculoId",
+            id:id
+        }
+    }).done(function (result) {
+        var err = result.detailMessage[0];
         if(err=='E')//error
             swal('Oops...',result.detailMessage,'error')
         else{
-            swal({type: 'success',title: result.detailMessage,showConfirmButton: false,timer: 5000})
-            setTimeout(function(){location.reload();},6000);//refrescar la pagina
+            swal({
+                type: 'success',
+                title: result.detailMessage,
+                showConfirmButton: false,
+                timer: 5000
+            }).then(function(){},//reject
+                function(){//resolv
+                    location.reload();
+                }
+            )
         }
     }).fail(function (e, msg, excepn) {
         swal('**** AJAX ERROR ',msg,'error')
     });
 };
 Proxy.deleteConductorId = function(id){
- $.ajax({
-    url: "/Transportes_Web/DriverServices",
-    type: "GET",
-    dataType: "json",
-    data: {
-        action: "deleteConductorId",
-        id:id
-    }
-}).done(function (result) {
-    var err = result.detailMessage[0];
+    $.ajax({
+        url: "/Transportes_Web/DriverServices",
+        type: "GET",
+        dataType: "json",
+        data: {
+            action: "deleteConductorId",
+            id:id
+        }
+    }).done(function (result) {
+        var err = result.detailMessage[0];
         if(err=='E')//error
             swal('Oops...',result.detailMessage,'error')
         else{
-            swal({type: 'success',title: result.detailMessage,showConfirmButton: false,timer: 5000})
-            setTimeout(function(){location.reload();},6000);//refrescar la pagina
+            swal({
+                type: 'success',
+                title: result.detailMessage,
+                showConfirmButton: false,
+                timer: 5000
+            }).then(function(){},//reject
+                function(){//resolv
+                    location.reload();
+                }
+            )
         }
     }).fail(function (e, msg, excepn) {
         swal('**** AJAX ERROR ',msg,'error')
@@ -356,18 +374,18 @@ Proxy.getConductorId = function (id,callBack) {
     });
 };
 Proxy.placeName = function(model,callback){
- $.ajax({
-    url: model.point.query,
-    type: "GET",
-    dataType: "json",
-}).done(function (result) {
-    console.log(result);
-    if(result.status=="OK")
-        callback(result,model);
-    else
-        swal('Oops...',"algo salio mal en la peticion: "+model.point.query,'error')
-}).fail(function (e, msg, excepn) {
-    swal('**** AJAX ERROR ',msg,'error')
-});
+    $.ajax({
+        url: model.point.query,
+        type: "GET",
+        dataType: "json",
+    }).done(function (result) {
+        console.log(result);
+        if(result.status=="OK")
+            callback(result,model);
+        else
+            swal('Oops...',"algo salio mal en la peticion: "+model.point.query,'error')
+    }).fail(function (e, msg, excepn) {
+        swal('**** AJAX ERROR ',msg,'error')
+    });
 };
 

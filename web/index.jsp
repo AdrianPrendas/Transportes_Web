@@ -2,18 +2,20 @@
     Document   : index
     Created on : Sep 15, 2017, 1:20:00 PM
     Author     : _Adrian_Prendas_
-    --%>
+    18 de noviembre examen final
+    22 de noviembre presentacion final 5pm, hay que apuntarse en un excel
+--%>
     <%@page contentType="text/html" pageEncoding="UTF-8"%>
     <%@page import="java.util.*" session="true" %>
     <%
-    HttpSession sesion = request.getSession(true);
-    if (sesion != null) {
-    if (sesion.getAttribute("usuario") != null) {
-    String tipoUsuario = (String) sesion.getAttribute("tipo");
-    response.sendRedirect(tipoUsuario + ".jsp");
-}
-}
-%>   
+        HttpSession sesion = request.getSession(true);
+        if (sesion != null) {
+            if (sesion.getAttribute("usuario") != null) {
+                String tipoUsuario = (String) sesion.getAttribute("tipo");
+                response.sendRedirect(tipoUsuario + ".jsp");
+            }
+        }
+    %>   
 <!DOCTYPE html>
 <html lang="en">
 <head>                   
