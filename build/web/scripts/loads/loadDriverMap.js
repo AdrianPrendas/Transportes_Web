@@ -223,7 +223,7 @@ function initMap() {
     			if(driverUpdated.vehiculo.estado){
     				driverUpdated.vehiculo.estado = false;
     				clean();
-    				clearInterval(timerId );
+    				clearInterval(timerId);
     			}
     			else{
     				driverUpdated.vehiculo.estado = true;

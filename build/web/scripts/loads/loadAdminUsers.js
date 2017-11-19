@@ -162,7 +162,7 @@ function doValidation(event) {
     var user = new User(
         $("#alias").val(),
         $("#name").val(),
-        ((model.point)?new Address(model.point.LatLng.lat,model.point.LatLng.lat,$("#address").val(),14):model.user.direccion),
+        ((model.point)?new Address(model.point.LatLng.lat,model.point.LatLng.lng,$("#address").val(),14):model.user.direccion),
         $("#lastName").val(),
         $("#date").val(),
         $("#phone").val(),

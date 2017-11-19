@@ -9,6 +9,9 @@ Address.prototype = {
         this.nombre = nombre;
         this.zoom = zoom;
     },
+    getLatLng: function(){
+        return {lat:this.lat, lng:this.lng};
+    },
     toString: function () {
         return JSON.stringify(this);
     }
