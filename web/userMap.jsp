@@ -21,7 +21,9 @@ response.sendRedirect("index.jsp");
 <head>
     <%@ include file="imports.jspf" %> 
     <script type="text/javascript" src="scripts/userMap.js"></script>
-    <script src="scripts/loads/loadUserMap.js" type="text/javascript"></script>
+    <script src="scripts/cronometro.js" type="text/javascript"></script>
+    <script src="https://www.paypalobjects.com/api/checkout.js"></script>
+    <script src="scripts/paypal.js" type="text/javascript"></script>
 </head>
 <body style="height: 100%;">
     <header>
@@ -47,6 +49,22 @@ response.sendRedirect("index.jsp");
     </a>
 </div>
 <div id="map"></div>
+<div id="metodo-pago">
+    <div id="tipo-cambio">
+        <table>
+            <caption>Tipo de cambio del dolar a moneda Costaricense</caption>
+            <thead>
+                <tr><td>compra</td></tr>
+                <tr><td>venta</td></tr>
+            </thead>
+            <tbody>
+                <tr><td><%%></td></tr>
+                <tr><td><%%></td></tr>
+            </tbody>
+        </table>
+    </div>
+    <div id="paypal-button"></div>    
+</div>
 <%@ include file="mapKey.jspf" %> 
 </body>
 </html>

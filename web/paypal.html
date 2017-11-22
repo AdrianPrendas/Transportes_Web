@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+
+<head>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="https://www.paypalobjects.com/api/checkout.js"></script>
+</head>
+
+<body>
+    <div id="paypal-button"></div>
+
+    <script>
+        paypal.Button.render({
+
+            env: 'sandbox', // Or 'sandbox',
+
+            commit: true, // Show a 'Pay Now' button
+
+            style: {
+                color: 'gold',
+                size: 'small'
+            },
+            client: {
+                sandbox: 'AUHuRn7DRNlzR_BxTUBFK0ouP96fW0Nriom10nINTLEk4Un4MeBlwzfVbmaosQH8KJTLSicbIpR2b341',
+                production: '<insert production client id>'
+            },
+
+            payment: function(data, actions) {
+             
+                // Make a call to the REST api to create the payment
+                return actions.payment.create({
+                    payment: {
+                        transactions: [
+                            {
+                                amount: { total: '0.01', currency: 'USD' }
+                            }
+                        ]
+                    }
+                });
+            },
+
+            onAuthorize: function(data, actions) {
+                // Make a call to the REST api to execute the payment
+                return actions.payment.execute().then(function() {
+                    window.alert('Payment Complete!');
+                });
+            },
+
+            onCancel: function(data, actions) {
+                /* 
+                 * Buyer cancelled the payment 
+                 */
+            },
+
+            onError: function(err) {
+               alert("ha ocurrido un error: "+err)
+            }
+
+        }, '#paypal-button');
+    </script>
+</body>
